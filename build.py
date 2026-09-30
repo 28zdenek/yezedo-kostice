@@ -277,6 +277,13 @@ img{max-width:100%;height:auto;}
 [hidden]{display:none !important;}
 .tab{background:transparent;color:rgba(250,248,242,0.75);transition:background .3s ease,color .3s ease;}
 .tab.is-active{background:#cbb98e;color:#161c11;}
+/* větší dotykové plochy malých odkazů na mobilu */
+@media (max-width:760px){
+  footer nav{row-gap:0 !important;}
+  footer nav a,footer > a{display:inline-block;padding:12px 0;}
+  article a[href$=".pdf"]{display:inline-block;padding:12px 0;}
+  a[href^="mailto:"]{display:inline-block;padding:8px 0;}
+}
 '''
 
 
