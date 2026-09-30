@@ -1,0 +1,218 @@
+{
+ "viz/01.jpg": {
+  "webp": "assets/viz/01.webp",
+  "fallback": "assets/viz/01.jpg",
+  "w": 1920,
+  "h": 960,
+  "webp960": "assets/viz/01-960.webp"
+ },
+ "viz/02-1.jpg": {
+  "webp": "assets/viz/02-1.webp",
+  "fallback": "assets/viz/02-1.jpg",
+  "w": 1920,
+  "h": 1275,
+  "webp960": "assets/viz/02-1-960.webp"
+ },
+ "viz/02-2.jpg": {
+  "webp": "assets/viz/02-2.webp",
+  "fallback": "assets/viz/02-2.jpg",
+  "w": 1920,
+  "h": 1275,
+  "webp960": "assets/viz/02-2-960.webp"
+ },
+ "viz/02-3.jpg": {
+  "webp": "assets/viz/02-3.webp",
+  "fallback": "assets/viz/02-3.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/02-3-960.webp"
+ },
+ "viz/02-4.jpg": {
+  "webp": "assets/viz/02-4.webp",
+  "fallback": "assets/viz/02-4.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/02-4-960.webp"
+ },
+ "viz/02-5.jpg": {
+  "webp": "assets/viz/02-5.webp",
+  "fallback": "assets/viz/02-5.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/02-5-960.webp"
+ },
+ "viz/03-1.jpg": {
+  "webp": "assets/viz/03-1.webp",
+  "fallback": "assets/viz/03-1.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/03-1-960.webp"
+ },
+ "viz/03-2.jpg": {
+  "webp": "assets/viz/03-2.webp",
+  "fallback": "assets/viz/03-2.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/03-2-960.webp"
+ },
+ "viz/03-22.jpg": {
+  "webp": "assets/viz/03-22.webp",
+  "fallback": "assets/viz/03-22.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/03-22-960.webp"
+ },
+ "viz/03-23.jpg": {
+  "webp": "assets/viz/03-23.webp",
+  "fallback": "assets/viz/03-23.jpg",
+  "w": 1920,
+  "h": 1091,
+  "webp960": "assets/viz/03-23-960.webp"
+ },
+ "viz/03-24.jpg": {
+  "webp": "assets/viz/03-24.webp",
+  "fallback": "assets/viz/03-24.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/03-24-960.webp"
+ },
+ "viz/03-25.jpg": {
+  "webp": "assets/viz/03-25.webp",
+  "fallback": "assets/viz/03-25.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/03-25-960.webp"
+ },
+ "viz/03-3.jpg": {
+  "webp": "assets/viz/03-3.webp",
+  "fallback": "assets/viz/03-3.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/03-3-960.webp"
+ },
+ "viz/biq-areal-letecky.png": {
+  "webp": "assets/viz/biq-areal-letecky.webp",
+  "fallback": "assets/viz/biq-areal-letecky.jpg",
+  "w": 1600,
+  "h": 1086,
+  "webp960": "assets/viz/biq-areal-letecky-960.webp"
+ },
+ "viz/biq-coworking.png": {
+  "webp": "assets/viz/biq-coworking.webp",
+  "fallback": "assets/viz/biq-coworking.jpg",
+  "w": 1200,
+  "h": 815,
+  "webp960": "assets/viz/biq-coworking-960.webp"
+ },
+ "viz/biq-dilny.png": {
+  "webp": "assets/viz/biq-dilny.webp",
+  "fallback": "assets/viz/biq-dilny.jpg",
+  "w": 1200,
+  "h": 815,
+  "webp960": "assets/viz/biq-dilny-960.webp"
+ },
+ "viz/biq-logo-zed.png": {
+  "webp": "assets/viz/biq-logo-zed.webp",
+  "fallback": "assets/viz/biq-logo-zed.jpg",
+  "w": 1600,
+  "h": 983,
+  "webp960": "assets/viz/biq-logo-zed-960.webp"
+ },
+ "viz/biq-parter-vecer.png": {
+  "webp": "assets/viz/biq-parter-vecer.webp",
+  "fallback": "assets/viz/biq-parter-vecer.jpg",
+  "w": 1131,
+  "h": 820,
+  "webp960": "assets/viz/biq-parter-vecer-960.webp"
+ },
+ "viz/biq-sal.png": {
+  "webp": "assets/viz/biq-sal.webp",
+  "fallback": "assets/viz/biq-sal.jpg",
+  "w": 1200,
+  "h": 780,
+  "webp960": "assets/viz/biq-sal-960.webp"
+ },
+ "viz/biq-vstup.png": {
+  "webp": "assets/viz/biq-vstup.webp",
+  "fallback": "assets/viz/biq-vstup.jpg",
+  "w": 1200,
+  "h": 688,
+  "webp960": "assets/viz/biq-vstup-960.webp"
+ },
+ "viz/biq-vyhlidka.png": {
+  "webp": "assets/viz/biq-vyhlidka.webp",
+  "fallback": "assets/viz/biq-vyhlidka.jpg",
+  "w": 1200,
+  "h": 798,
+  "webp960": "assets/viz/biq-vyhlidka-960.webp"
+ },
+ "viz/hall-SO03-b.jpg": {
+  "webp": "assets/viz/hall-SO03-b.webp",
+  "fallback": "assets/viz/hall-SO03-b.jpg",
+  "w": 1920,
+  "h": 960,
+  "webp960": "assets/viz/hall-SO03-b-960.webp"
+ },
+ "viz/hall-SO03.jpg": {
+  "webp": "assets/viz/hall-SO03.webp",
+  "fallback": "assets/viz/hall-SO03.jpg",
+  "w": 1920,
+  "h": 960,
+  "webp960": "assets/viz/hall-SO03-960.webp"
+ },
+ "viz/hall-SO04.jpg": {
+  "webp": "assets/viz/hall-SO04.webp",
+  "fallback": "assets/viz/hall-SO04.jpg",
+  "w": 1920,
+  "h": 960,
+  "webp960": "assets/viz/hall-SO04-960.webp"
+ },
+ "viz/hall-SO05.jpg": {
+  "webp": "assets/viz/hall-SO05.webp",
+  "fallback": "assets/viz/hall-SO05.jpg",
+  "w": 1920,
+  "h": 960,
+  "webp960": "assets/viz/hall-SO05-960.webp"
+ },
+ "viz/services-01.jpg": {
+  "webp": "assets/viz/services-01.webp",
+  "fallback": "assets/viz/services-01.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/services-01-960.webp"
+ },
+ "viz/services-02.jpg": {
+  "webp": "assets/viz/services-02.webp",
+  "fallback": "assets/viz/services-02.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/services-02-960.webp"
+ },
+ "viz/services-03.jpg": {
+  "webp": "assets/viz/services-03.webp",
+  "fallback": "assets/viz/services-03.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/services-03-960.webp"
+ },
+ "viz/services-04.jpg": {
+  "webp": "assets/viz/services-04.webp",
+  "fallback": "assets/viz/services-04.jpg",
+  "w": 1920,
+  "h": 1091,
+  "webp960": "assets/viz/services-04-960.webp"
+ },
+ "viz/services-05.png": {
+  "webp": "assets/viz/services-05.webp",
+  "fallback": "assets/viz/services-05.jpg",
+  "w": 1920,
+  "h": 1080,
+  "webp960": "assets/viz/services-05-960.webp"
+ },
+ "znak-kostice.jpeg": {
+  "webp": "assets/znak-kostice.webp",
+  "fallback": "assets/znak-kostice.jpg",
+  "w": 201,
+  "h": 251
+ }
+}
