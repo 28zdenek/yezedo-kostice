@@ -168,6 +168,9 @@ def page_specific(name, tpl):
     return tpl
 
 
+CREDIT_URL = 'https://www.zdenekmatuska.cz/tvorba-webovych-stranek-breclav/'
+
+
 def refine(tpl):
     """Úpravy nad rámec handoffu, stejné pro všechny stránky: kontrast, přístupnost, patička."""
     # Kontrast (WCAG AA 4.5:1): zlatohnědé popisky na světlém pozadí, slabý text na tmavém
@@ -191,6 +194,10 @@ def refine(tpl):
         extra = ''.join('%s<a href="%s.dc.html"%s>%s</a>\n' % (m.group(1), page, m.group(2), page)
                         for page in ('Development', 'Services', 'BIQ'))
         tpl = tpl[:i] + foot[:m.end()] + extra + foot[m.end():]
+    # Podpis autora webu v patičce
+    old = '© 2026 Yezedo Kostice</div>'
+    assert tpl.count(old) == 1
+    tpl = tpl.replace(old, '© 2026 Yezedo Kostice · Web vytvořil <a class="credit" href="%s" target="_blank">Zdeněk Matuška</a></div>' % CREDIT_URL)
     return tpl
 
 
@@ -335,6 +342,8 @@ main:focus{outline:none;box-shadow:none;}
 .skip{position:absolute;left:16px;top:-80px;z-index:100;padding:13px 20px;border-radius:100px;background:#cbb98e;color:#161c11;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;transition:top .2s ease;}
 .skip:focus{top:12px;}
 [data-lightbox]{cursor:zoom-in;}
+.credit{color:rgba(250,248,242,0.82);text-decoration:underline;text-decoration-color:rgba(203,185,142,0.6);text-underline-offset:3px;transition:color .3s ease;}
+.credit:hover{color:#cbb98e;}
 /* popisek nad h1 leží na fotce */
 main div:has(+ h1){color:#e6d9b4;text-shadow:0 0 3px rgba(15,18,12,0.85),0 1px 16px rgba(15,18,12,0.9);}
 @media (min-width:901px){[data-nav-toggle]{display:none;}}
