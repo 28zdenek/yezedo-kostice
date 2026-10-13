@@ -18,7 +18,7 @@ OUT = 'dist' if PROD else 'docs'
 SITE = 'https://www.yezedokostice.cz' if PROD else 'https://yezedo.zdenekmatuska.cz'
 # Ostrý web: dokud je True, vyhledávače ho neindexují (meta robots + robots.txt). Po schválení klientem
 # přepnout na False, sestavit a nahrát. Náhled na subdoméně se neindexuje nikdy (byl by duplicitou).
-NOINDEX_PROD = True
+NOINDEX_PROD = False
 NOINDEX = NOINDEX_PROD if PROD else True
 
 IMAGES = json.load(open('images.json'))
