@@ -458,6 +458,9 @@ def split_rules(css):
     return blocks
 
 
+SOCIAL_BOTS = ('facebookexternalhit', 'Facebot', 'meta-externalagent', 'Twitterbot', 'LinkedInBot',
+               'WhatsApp', 'TelegramBot', 'Slackbot', 'Discordbot')
+
 PAGE_404 = '''<body class="page-404">
 <main class="e404">
   <a class="e404-logo" href="/">YEZEDO</a>
@@ -524,7 +527,10 @@ def main():
     urls = '\n'.join(f'  <url><loc>{SITE}{m["path"]}</loc><lastmod>{today}</lastmod></url>' for m in PAGES.values())
     open(f'{OUT}/sitemap.xml', 'w').write(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n')
-    robots = 'User-agent: *\nDisallow: /\n' if NOINDEX else f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n'
+    # I v neindexovaném režimu pustit roboty sociálních sítí, jinak se při sdílení odkazu nezobrazí náhled
+    # (Facebook hlásí 403). Vyhledávače drží venku Disallow a meta robots noindex.
+    social = ''.join('User-agent: %s\n' % bot for bot in SOCIAL_BOTS) + 'Allow: /\n\n'
+    robots = social + 'User-agent: *\nDisallow: /\n' if NOINDEX else f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n'
     open(f'{OUT}/robots.txt', 'w').write(robots)
     print('✓ styles.css: %d tříd' % len(sheet.classes))
 
