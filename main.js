@@ -21,6 +21,19 @@ document.querySelectorAll('a[data-yt]').forEach(function (a) {
   });
 });
 
+// Mapa na Domů: iframe Google se vloží až po kliknutí
+document.querySelectorAll('[data-map]').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var f = document.createElement('iframe');
+    f.className = 'map-frame';
+    f.src = btn.getAttribute('data-map');
+    f.title = 'Mapa: Kostice u Břeclavi';
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    btn.parentNode.replaceWith(f);
+    f.focus();
+  });
+});
+
 // Mobilní menu z klávesnice: Enter přepíná, Escape zavírá
 (function () {
   var t = document.getElementById('navtoggle');

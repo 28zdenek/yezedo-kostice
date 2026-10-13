@@ -1,19 +1,25 @@
 """Převede designové reference handoff/*.dc.html na čistý statický web v docs/.
 
 Spuštění:  python3 optimize_images.py   (jen když se změní obrázky)
-           python3 build.py
+           python3 build.py         náhled pro klienta -> docs/ (GitHub Pages, yezedo.zdenekmatuska.cz)
+           python3 build.py prod    ostrý web -> dist/ (www.yezedokostice.cz, nahrává deploy.py)
 """
+import datetime
 import html
 import json
 import os
 import re
 import shutil
+import sys
 
 SRC = 'handoff'
-OUT = 'docs'
-SITE = 'https://yezedo.zdenekmatuska.cz'
-# Náhled pro klienta: dokud je True, vyhledávače web neindexují (meta robots + robots.txt).
-NOINDEX = True
+PROD = sys.argv[1:] == ['prod']
+OUT = 'dist' if PROD else 'docs'
+SITE = 'https://www.yezedokostice.cz' if PROD else 'https://yezedo.zdenekmatuska.cz'
+# Ostrý web: dokud je True, vyhledávače ho neindexují (meta robots + robots.txt). Po schválení klientem
+# přepnout na False, sestavit a nahrát. Náhled na subdoméně se neindexuje nikdy (byl by duplicitou).
+NOINDEX_PROD = True
+NOINDEX = NOINDEX_PROD if PROD else True
 
 IMAGES = json.load(open('images.json'))
 
@@ -146,6 +152,12 @@ def page_specific(name, tpl):
         tpl, n = re.subn(r'<a href="\w+\.dc\.html" data-pillar.*?</a>',
                          lambda m: m.group(0).replace('<h3', '<h2').replace('</h3>', '</h2>'), tpl, flags=re.S)
         assert n == 3
+        # Mapa: Google iframe (a jeho cookies) se načte až po kliknutí
+        tpl, n = re.subn(r'<iframe title="[^"]*" src="(https://www\.google\.com/maps[^"]*)" style="[^"]*"></iframe>',
+                         lambda m: '<div class="map"><button type="button" class="map-btn" data-map="%s">Zobrazit mapu</button>'
+                                   '<p class="map-note">Mapu poskytuje Google, načte se až po kliknutí.</p></div>'
+                                   % m.group(1).replace('&', '&amp;'), tpl)
+        assert n == 1
         # Video: vlastní náhled, přehrávač YouTube (a jeho cookies) se načte až po kliknutí
         tpl, n = re.subn(r'<iframe src="https://www\.youtube\.com/embed/([\w-]+)" title="([^"]*)"[^>]*></iframe>',
                          r'<a class="yt" href="https://youtu.be/\1" data-yt="\1" data-title="\2" target="_blank"'
@@ -285,10 +297,37 @@ class StyleSheet:
         return '\n'.join(out)
 
 
-def head(name, meta):
+PLACE = {
+    '@type': 'Place', '@id': 'https://www.yezedokostice.cz/#areal', 'name': 'Yezedo Kostice',
+    'description': 'Průmyslová a podnikatelská zóna v Kosticích u Břeclavi – výrobní a skladové haly, služby a veřejný prostor.',
+    'address': {'@type': 'PostalAddress', 'addressLocality': 'Kostice', 'postalCode': '691 52',
+                'addressRegion': 'Jihomoravský kraj', 'addressCountry': 'CZ'},
+    'geo': {'@type': 'GeoCoordinates', 'latitude': 48.751411, 'longitude': 16.969294},
+    'hasMap': 'https://www.google.com/maps?q=48.751411,16.969294',
+    'telephone': '+420725111277', 'email': 'starosta@kostice.cz',
+}
+
+
+def json_ld(meta):
+    """Strukturovaná data: na Domů místo + web, na podstránkách drobečková navigace."""
+    if meta['path'] == '/':
+        graph = [dict(PLACE, url=SITE + '/', image=SITE + '/' + IMAGES[meta['og']]['fallback']),
+                 {'@type': 'WebSite', '@id': SITE + '/#web', 'url': SITE + '/', 'name': 'Yezedo Kostice', 'inLanguage': 'cs'}]
+    else:
+        crumb = meta['title'].split(' | ')[0].split(' – ')[0]
+        graph = [{'@type': 'BreadcrumbList', 'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'Yezedo Kostice', 'item': SITE + '/'},
+            {'@type': 'ListItem', 'position': 2, 'name': crumb, 'item': SITE + meta['path']}]}]
+    data = json.dumps({'@context': 'https://schema.org', '@graph': graph}, ensure_ascii=False)
+    return '<script type="application/ld+json">%s</script>' % data.replace('</', '<\\/')
+
+
+def head(name, meta, indexable=True):
     url = SITE + meta['path']
-    og = IMAGES[meta['og']]['fallback']
-    robots = '\n<meta name="robots" content="noindex, nofollow">' if NOINDEX else ''
+    info = IMAGES[meta['og']]
+    og = info['fallback']
+    extra = json_ld(meta) if indexable else ''
+    robots = '\n<meta name="robots" content="noindex, nofollow">' if NOINDEX or not indexable else ''
     return f'''<!DOCTYPE html>
 <html lang="cs">
 <head>
@@ -303,14 +342,17 @@ def head(name, meta):
 <meta property="og:title" content="{esc(meta['title'])}">
 <meta property="og:description" content="{esc(meta['desc'])}">
 <meta property="og:image" content="{SITE}/{og}">
+<meta property="og:image:width" content="{info['w']}">
+<meta property="og:image:height" content="{info['h']}">
 <meta property="og:url" content="{url}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preload" href="/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/styles.css">
 <script src="/main.js" defer></script>
+{extra}
 </head>
 '''
 
@@ -342,6 +384,23 @@ main:focus{outline:none;box-shadow:none;}
 .skip{position:absolute;left:16px;top:-80px;z-index:100;padding:13px 20px;border-radius:100px;background:#cbb98e;color:#161c11;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;transition:top .2s ease;}
 .skip:focus{top:12px;}
 [data-lightbox]{cursor:zoom-in;}
+/* mapa: náhled se situací areálu, iframe Google vloží main.js po kliknutí */
+.map{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;height:clamp(320px,42vw,460px);padding:24px;box-sizing:border-box;text-align:center;background:#161c11 url(/assets/viz/01-960.webp) center/cover no-repeat;}
+.map::before{content:"";position:absolute;inset:0;background:rgba(15,18,12,0.74);}
+.map-btn{position:relative;padding:17px 30px;border:0;border-radius:100px;background:#cbb98e;color:#161c11;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;cursor:pointer;transition:background .3s ease;}
+.map-btn:hover{background:#ffffff;}
+.map-note{position:relative;margin:0;max-width:30ch;font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.5;color:rgba(250,248,242,0.78);}
+.map-frame{display:block;width:100%;height:clamp(320px,42vw,460px);border:0;}
+/* stránka 404 */
+.e404{min-height:100vh;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;gap:22px;max-width:1240px;margin:0 auto;padding:clamp(28px,6vw,72px) clamp(20px,5vw,44px);background:#161c11;color:#faf8f2;}
+.page-404{background:#161c11;}
+.e404-logo{position:absolute;top:clamp(20px,4vw,32px);font-family:'Archivo',sans-serif;font-weight:800;font-size:19px;letter-spacing:0.34em;color:#ffffff;}
+.e404 h1{margin:0;font-family:'Archivo',sans-serif;font-weight:800;font-size:clamp(40px,7vw,104px);line-height:0.94;letter-spacing:-0.035em;text-transform:uppercase;color:#ffffff;text-wrap:balance;}
+.e404 p{margin:0;max-width:46ch;font-family:'DM Sans',sans-serif;font-size:18px;line-height:1.6;color:rgba(250,248,242,0.78);}
+.e404-links{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;}
+.e404-links a{padding:17px 30px;border-radius:100px;border:1px solid rgba(250,248,242,0.4);font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#ffffff;transition:background .3s ease,color .3s ease,border-color .3s ease;}
+.e404-links a:first-child{background:#cbb98e;border-color:#cbb98e;color:#161c11;}
+.e404-links a:hover{background:#ffffff;border-color:#ffffff;color:#161c11;}
 .credit{color:rgba(250,248,242,0.82);text-decoration:underline;text-decoration-color:rgba(203,185,142,0.6);text-underline-offset:3px;transition:color .3s ease;}
 .credit:hover{color:#cbb98e;}
 /* popisek nad h1 leží na fotce */
@@ -399,8 +458,24 @@ def split_rules(css):
     return blocks
 
 
+PAGE_404 = '''<body class="page-404">
+<main class="e404">
+  <a class="e404-logo" href="/">YEZEDO</a>
+  <h1>Tahle stránka tu není</h1>
+  <p>Adresa je nejspíš stará nebo je v ní překlep. Úvodní stránka i dokumenty jsou na svém místě.</p>
+  <div class="e404-links"><a href="/">Zpět na úvod</a><a href="/dokumenty/">Dokumenty</a></div>
+</main>
+</body>
+</html>
+'''
+
+
 def main():
-    if os.path.exists(OUT):
+    if PROD:
+        # ostrý web se skládá načisto, obrázky se berou z náhledu (docs/assets, plní optimize_images.py)
+        shutil.rmtree(OUT, ignore_errors=True)
+        shutil.copytree('docs/assets', f'{OUT}/assets', ignore=shutil.ignore_patterns('.DS_Store'))
+    elif os.path.exists(OUT):
         for entry in os.listdir(OUT):
             if entry not in ('assets', 'CNAME'):
                 p = os.path.join(OUT, entry)
@@ -430,14 +505,23 @@ def main():
         print('✓', path)
 
     # helmet pravidla (media queries s !important) před třídami, aby třídy měly stejnou prioritu jako původní inline styly
+    # písma jsou na webu (fonts/), ne z Google Fonts; @font-face musí být před ostatními pravidly
     open(f'{OUT}/styles.css', 'w', encoding='utf-8').write(
-        BASE_CSS + '\n'.join(helmet_blocks) + '\n' + sheet.css() + '\n')
-    shutil.copy('main.js', f'{OUT}/main.js')
-    shutil.copy('favicon.svg', f'{OUT}/favicon.svg')
-    shutil.copytree(f'{SRC}/dokumenty', f'{OUT}/dokumenty', dirs_exist_ok=True)
-    open(f'{OUT}/CNAME', 'w').write('yezedo.zdenekmatuska.cz\n')
-    open(f'{OUT}/.nojekyll', 'w').write('')
-    urls = '\n'.join(f'  <url><loc>{SITE}{m["path"]}</loc></url>' for m in PAGES.values())
+        open('fonts/fonts.css', encoding='utf-8').read() + BASE_CSS + '\n'.join(helmet_blocks) + '\n' + sheet.css() + '\n')
+    shutil.copytree('fonts', f'{OUT}/fonts', ignore=shutil.ignore_patterns('*.css', '.DS_Store'))
+    for f in ('main.js', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png'):
+        shutil.copy(f, f'{OUT}/{f}')
+    shutil.copytree(f'{SRC}/dokumenty', f'{OUT}/dokumenty', dirs_exist_ok=True, ignore=shutil.ignore_patterns('.DS_Store'))
+    meta404 = {'path': '/404.html', 'title': 'Stránka nenalezena | Yezedo Kostice',
+               'desc': 'Tato stránka na webu Yezedo Kostice neexistuje.', 'og': PAGES['Domu']['og']}
+    open(f'{OUT}/404.html', 'w', encoding='utf-8').write(head('404', meta404, indexable=False) + PAGE_404)
+    if PROD:
+        shutil.copy('web.config', f'{OUT}/web.config')
+    else:
+        open(f'{OUT}/CNAME', 'w').write('yezedo.zdenekmatuska.cz\n')
+        open(f'{OUT}/.nojekyll', 'w').write('')
+    today = datetime.date.today().isoformat()
+    urls = '\n'.join(f'  <url><loc>{SITE}{m["path"]}</loc><lastmod>{today}</lastmod></url>' for m in PAGES.values())
     open(f'{OUT}/sitemap.xml', 'w').write(
         f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}\n</urlset>\n')
     robots = 'User-agent: *\nDisallow: /\n' if NOINDEX else f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n'
