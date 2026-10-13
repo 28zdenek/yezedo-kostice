@@ -134,6 +134,10 @@ def page_specific(name, tpl):
             assert old in tpl, old
             tpl = tpl.replace(old, new)
         tpl = expand_for(tpl, 'timeline', TIMELINE)
+        # Skrytá sekce s čísly z návrhu (12 ha, 18 firem, 450+ míst): neověřené údaje, které by Google
+        # v kódu přečetl, a navíc v ní byla přebytečná </div>, která rozbíjela strukturu stránky.
+        tpl, n = re.subn(r'\n  <section style="display:none;.*?</section>\n', '\n', tpl, flags=re.S)
+        assert n == 1
         # Galerie: onClick -> data-lightbox, vlastní lightbox ve vanilla JS
         tpl = re.sub(r'onClick="\{\{ (open\w+) \}\}"',
                      lambda m: 'data-lightbox="/%s" role="button" tabindex="0"' % IMAGES[LIGHTBOX[m.group(1)]]['webp'], tpl)
@@ -183,6 +187,13 @@ def page_specific(name, tpl):
 CREDIT_URL = 'https://www.zdenekmatuska.cz/tvorba-webovych-stranek-breclav/'
 
 
+TYPO_FIXES = {
+    'Rozměry vychází z architektonické studie': 'Rozměry vycházejí z architektonické studie',
+    'získají nové využití - například': 'získají nové využití – například',
+    'jako živá laboratoř - místo': 'jako živá laboratoř – místo',
+}
+
+
 def refine(tpl):
     """Úpravy nad rámec handoffu, stejné pro všechny stránky: kontrast, přístupnost, patička."""
     # Kontrast (WCAG AA 4.5:1): zlatohnědé popisky na světlém pozadí, slabý text na tmavém
@@ -193,6 +204,15 @@ def refine(tpl):
     old = '<input type="checkbox" id="navtoggle" data-nav-toggle style="display:none;" />'
     assert old in tpl
     tpl = tpl.replace(old, '<input type="checkbox" id="navtoggle" data-nav-toggle class="vh" aria-label="Menu" />')
+    # název nese přepínač; aria-label na <label> je neplatný
+    assert '<label for="navtoggle" data-burger aria-label="Menu">' in tpl
+    tpl = tpl.replace('<label for="navtoggle" data-burger aria-label="Menu">', '<label for="navtoggle" data-burger>')
+    # dvě navigace na stránce musí jít rozlišit
+    assert tpl.count('<nav ') == 2
+    tpl = tpl.replace('<nav data-nav ', '<nav data-nav aria-label="Hlavní navigace" ', 1)
+    i = tpl.index('<footer')
+    tpl = tpl[:i] + tpl[i:].replace('<nav ', '<nav aria-label="Patička" ', 1)
+    assert tpl.count('aria-label="Hlavní navigace"') == 1 and tpl.count('aria-label="Patička"') == 1
     # Odkaz „přeskočit na obsah“ a <main>
     assert tpl.count('<header') == 1 and tpl.count('<footer') == 1
     tpl = tpl.replace('<header', '<a class="skip" href="#obsah">Přeskočit na obsah</a>\n  <header', 1)
@@ -206,6 +226,9 @@ def refine(tpl):
         extra = ''.join('%s<a href="%s.dc.html"%s>%s</a>\n' % (m.group(1), page, m.group(2), page)
                         for page in ('Development', 'Services', 'BIQ'))
         tpl = tpl[:i] + foot[:m.end()] + extra + foot[m.end():]
+    # Drobné pravopisné a typografické opravy textů z návrhu (obsah se nemění)
+    for old, new in TYPO_FIXES.items():
+        tpl = tpl.replace(old, new)
     # Podpis autora webu v patičce
     old = '© 2026 Yezedo Kostice</div>'
     assert tpl.count(old) == 1
@@ -215,7 +238,7 @@ def refine(tpl):
 
 LIGHTBOX_HTML = '''
   <div data-lightbox-overlay hidden role="dialog" aria-modal="true" aria-label="Zvětšený obrázek" style="position:fixed;inset:0;z-index:90;background:rgba(10,12,8,0.94);display:flex;align-items:center;justify-content:center;padding:clamp(16px,5vw,56px);cursor:zoom-out;backdrop-filter:blur(6px);">
-    <img alt="Zvětšená vizualizace" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;box-shadow:0 30px 90px rgba(0,0,0,0.6);" />
+    <img src="data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==" alt="" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;box-shadow:0 30px 90px rgba(0,0,0,0.6);" />
     <button type="button" data-lightbox-close style="position:absolute;top:14px;right:22px;padding:14px;background:none;border:0;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#cbb98e;">Zavřít ✕</button>
   </div>'''
 
@@ -384,6 +407,9 @@ main:focus{outline:none;box-shadow:none;}
 .skip{position:absolute;left:16px;top:-80px;z-index:100;padding:13px 20px;border-radius:100px;background:#cbb98e;color:#161c11;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;transition:top .2s ease;}
 .skip:focus{top:12px;}
 [data-lightbox]{cursor:zoom-in;}
+/* kotva #dokumenty: nadpis nesmí zajet pod pevnou hlavičku */
+#dokumenty{scroll-margin-top:36px;}
+.page-development main section p{max-width:74ch;}
 /* mapa: náhled se situací areálu, iframe Google vloží main.js po kliknutí */
 .map{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;height:clamp(320px,42vw,460px);padding:24px;box-sizing:border-box;text-align:center;background:#161c11 url(/assets/viz/01-960.webp) center/cover no-repeat;}
 .map::before{content:"";position:absolute;inset:0;background:rgba(15,18,12,0.74);}
@@ -499,6 +525,8 @@ def main():
         tpl = pictures(tpl)
         tpl = tpl.replace('<iframe ', '<iframe loading="lazy" ')
         tpl = sheet.convert(tpl)
+        for tag in ('div', 'section', 'a', 'main', 'article', 'nav'):
+            assert len(re.findall(r'<%s\b' % tag, tpl)) == tpl.count('</%s>' % tag), (name, tag)
         tpl = re.sub(r'\n{3,}', '\n\n', tpl).strip()
         body_cls = ' class="page-%s"' % meta['path'].strip('/') if meta['path'] != '/' else ' class="page-domu"'
         page = head(name, meta) + f'<body{body_cls}>\n{tpl}\n</body>\n</html>\n'

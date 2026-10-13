@@ -51,6 +51,7 @@ document.querySelectorAll('[data-map]').forEach(function (btn) {
   var overlay = document.querySelector('[data-lightbox-overlay]');
   if (!overlay) return;
   var img = overlay.querySelector('img');
+  var blank = img.getAttribute('src');
   var closeBtn = overlay.querySelector('[data-lightbox-close]');
   var opener = null;
   function open(el) {
@@ -63,7 +64,7 @@ document.querySelectorAll('[data-map]').forEach(function (btn) {
   }
   function close() {
     overlay.hidden = true;
-    img.removeAttribute('src');
+    img.src = blank;
     if (opener) opener.focus();
   }
   document.querySelectorAll('[data-lightbox]').forEach(function (el) {
