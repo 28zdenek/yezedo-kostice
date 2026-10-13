@@ -509,7 +509,7 @@ def main():
     open(f'{OUT}/styles.css', 'w', encoding='utf-8').write(
         open('fonts/fonts.css', encoding='utf-8').read() + BASE_CSS + '\n'.join(helmet_blocks) + '\n' + sheet.css() + '\n')
     shutil.copytree('fonts', f'{OUT}/fonts', ignore=shutil.ignore_patterns('*.css', '.DS_Store'))
-    for f in ('main.js', 'favicon.svg', 'favicon.png', 'apple-touch-icon.png'):
+    for f in ('main.js', 'favicon.svg', 'favicon.png', 'favicon.ico', 'apple-touch-icon.png'):
         shutil.copy(f, f'{OUT}/{f}')
     shutil.copytree(f'{SRC}/dokumenty', f'{OUT}/dokumenty', dirs_exist_ok=True, ignore=shutil.ignore_patterns('.DS_Store'))
     meta404 = {'path': '/404.html', 'title': 'Stránka nenalezena | Yezedo Kostice',
