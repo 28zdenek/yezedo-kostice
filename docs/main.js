@@ -6,20 +6,67 @@ document.querySelectorAll('nav[data-nav] a').forEach(function (a) {
   });
 });
 
-// Galerie na Domů: zvětšení obrázku
+// Video na Domů: přehrávač YouTube se vloží až po kliknutí na náhled
+document.querySelectorAll('a[data-yt]').forEach(function (a) {
+  a.addEventListener('click', function (e) {
+    e.preventDefault();
+    var f = document.createElement('iframe');
+    f.className = 'yt-frame';
+    f.src = 'https://www.youtube-nocookie.com/embed/' + a.getAttribute('data-yt') + '?autoplay=1&rel=0';
+    f.title = a.getAttribute('data-title');
+    f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+    f.referrerPolicy = 'strict-origin-when-cross-origin';
+    f.allowFullscreen = true;
+    a.replaceWith(f);
+  });
+});
+
+// Mobilní menu z klávesnice: Enter přepíná, Escape zavírá
+(function () {
+  var t = document.getElementById('navtoggle');
+  if (!t) return;
+  t.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); t.checked = !t.checked; }
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && t.checked) { t.checked = false; t.focus(); }
+  });
+})();
+
+// Galerie na Domů: zvětšení obrázku (myš, dotyk i klávesnice)
 (function () {
   var overlay = document.querySelector('[data-lightbox-overlay]');
   if (!overlay) return;
   var img = overlay.querySelector('img');
-  function close() { overlay.hidden = true; img.removeAttribute('src'); }
+  var closeBtn = overlay.querySelector('[data-lightbox-close]');
+  var opener = null;
+  function open(el) {
+    var thumb = el.querySelector('img');
+    opener = el;
+    img.src = el.getAttribute('data-lightbox');
+    img.alt = thumb ? thumb.alt : '';
+    overlay.hidden = false;
+    closeBtn.focus();
+  }
+  function close() {
+    overlay.hidden = true;
+    img.removeAttribute('src');
+    if (opener) opener.focus();
+  }
   document.querySelectorAll('[data-lightbox]').forEach(function (el) {
-    el.addEventListener('click', function () {
-      img.src = el.getAttribute('data-lightbox');
-      overlay.hidden = false;
+    var thumb = el.querySelector('img');
+    el.setAttribute('aria-label', 'Zvětšit obrázek' + (thumb && thumb.alt ? ': ' + thumb.alt : ''));
+    el.addEventListener('click', function () { open(el); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el); }
     });
   });
   overlay.addEventListener('click', close);
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !overlay.hidden) close(); });
+  document.addEventListener('keydown', function (e) {
+    if (overlay.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'Tab') { e.preventDefault(); closeBtn.focus(); }
+  });
 })();
 
 // Dokumenty: filtr podle skupiny

@@ -83,9 +83,10 @@ DOCS = [
     {'name': 'SO09 Výrobní hala – pohledy', 'group': 'Objekty', 'key': 'obj', 'href': 'dokumenty/SO09-pohledy.pdf'},
 ]
 TIMELINE = [
-    {'title': 'Zahájení výstavby zóny', 'date': '2025'},
-    {'title': 'Kolaudace první etapy hal', 'date': '2026'},
-    {'title': 'Dokončení celého areálu', 'date': '2028', 'note': 'předpoklad'},
+    {'title': 'Zahájení', 'date': '2024'},
+    {'title': 'Kolaudace inženýrských sítí', 'date': '2026'},
+    {'title': 'Projektová příprava', 'date': '2027'},
+    {'title': 'Začátek výstavby hal', 'date': '2028'},
 ]
 LIGHTBOX = {
     'openLake': 'viz/02-1.jpg', 'openRoad': 'viz/02-2.jpg', 'openYard': 'viz/03-22.jpg',
@@ -129,12 +130,27 @@ def page_specific(name, tpl):
         tpl = expand_for(tpl, 'timeline', TIMELINE)
         # Galerie: onClick -> data-lightbox, vlastní lightbox ve vanilla JS
         tpl = re.sub(r'onClick="\{\{ (open\w+) \}\}"',
-                     lambda m: 'data-lightbox="/%s"' % IMAGES[LIGHTBOX[m.group(1)]]['webp'], tpl)
+                     lambda m: 'data-lightbox="/%s" role="button" tabindex="0"' % IMAGES[LIGHTBOX[m.group(1)]]['webp'], tpl)
         tpl = re.sub(r'\s*<sc-if value="\{\{ lightbox \}\}".*?</sc-if>', LIGHTBOX_HTML, tpl, flags=re.S)
         # tlačítko v hero odkazuje na #dokumenty, sekce ale neměla id
         tpl = tpl.replace('<section style="background:#161c11;padding:0 clamp(20px,5vw,44px);">\n    <a href="Dokumenty.dc.html"',
                           '<section id="dokumenty" style="background:#161c11;padding:0 clamp(20px,5vw,44px);">\n    <a href="Dokumenty.dc.html"')
         assert 'id="dokumenty"' in tpl
+        # Dlaždice a sekce s videem: na tabletu pod sebou (jinak 2 + 1 a stlačené video)
+        for marker, grid in (('data-pillars', 'grid-template-columns:repeat(auto-fit,minmax(260px,1fr));">'),
+                             ('data-about', 'grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:clamp(40px,6vw,96px);align-items:start;">')):
+            old = '<div style="max-width:1240px;margin:0 auto;display:grid;' + grid
+            assert tpl.count(old) == 1, marker
+            tpl = tpl.replace(old, old.replace('<div ', '<div %s ' % marker))
+        # Dlaždice jsou hned pod h1, takže h2 (ne h3)
+        tpl, n = re.subn(r'<a href="\w+\.dc\.html" data-pillar.*?</a>',
+                         lambda m: m.group(0).replace('<h3', '<h2').replace('</h3>', '</h2>'), tpl, flags=re.S)
+        assert n == 3
+        # Video: vlastní náhled, přehrávač YouTube (a jeho cookies) se načte až po kliknutí
+        tpl, n = re.subn(r'<iframe src="https://www\.youtube\.com/embed/([\w-]+)" title="([^"]*)"[^>]*></iframe>',
+                         r'<a class="yt" href="https://youtu.be/\1" data-yt="\1" data-title="\2" target="_blank"'
+                         r' aria-label="Přehrát – \2"><span class="yt-play" aria-hidden="true"></span></a>', tpl)
+        assert n == 1
     elif name == 'Development':
         halls = [{**h, 'status': STATUS[h['status']]['label'], 'statusBg': STATUS[h['status']]['bg'],
                   'statusFg': STATUS[h['status']]['fg']} for h in HALLS]
@@ -152,10 +168,36 @@ def page_specific(name, tpl):
     return tpl
 
 
+def refine(tpl):
+    """Úpravy nad rámec handoffu, stejné pro všechny stránky: kontrast, přístupnost, patička."""
+    # Kontrast (WCAG AA 4.5:1): zlatohnědé popisky na světlém pozadí, slabý text na tmavém
+    tpl = tpl.replace('color:#8e7f58', 'color:#766843')
+    tpl = re.sub(r'color:rgba\(250,248,242,0\.(35|4|45)\)', 'color:rgba(250,248,242,0.55)', tpl)
+    tpl = tpl.replace('font-size:11px', 'font-size:12px')
+    # Mobilní menu: přepínač zůstává v pořadí tabulátoru (display:none ho z něj vyřadil)
+    old = '<input type="checkbox" id="navtoggle" data-nav-toggle style="display:none;" />'
+    assert old in tpl
+    tpl = tpl.replace(old, '<input type="checkbox" id="navtoggle" data-nav-toggle class="vh" aria-label="Menu" />')
+    # Odkaz „přeskočit na obsah“ a <main>
+    assert tpl.count('<header') == 1 and tpl.count('<footer') == 1
+    tpl = tpl.replace('<header', '<a class="skip" href="#obsah">Přeskočit na obsah</a>\n  <header', 1)
+    tpl = tpl.replace('</header>', '</header>\n  <main id="obsah" tabindex="-1">', 1)
+    tpl = tpl.replace('<footer', '</main>\n\n  <footer', 1)
+    # Patička: na všech stránkách stejných sedm odkazů
+    i = tpl.index('<footer')
+    foot = tpl[i:]
+    if 'Development.dc.html' not in foot:
+        m = re.search(r'( *)<a href="[^"]*#zona"([^>]*)>Zóna</a>\n', foot)
+        extra = ''.join('%s<a href="%s.dc.html"%s>%s</a>\n' % (m.group(1), page, m.group(2), page)
+                        for page in ('Development', 'Services', 'BIQ'))
+        tpl = tpl[:i] + foot[:m.end()] + extra + foot[m.end():]
+    return tpl
+
+
 LIGHTBOX_HTML = '''
-  <div data-lightbox-overlay hidden style="position:fixed;inset:0;z-index:90;background:rgba(10,12,8,0.94);display:flex;align-items:center;justify-content:center;padding:clamp(16px,5vw,56px);cursor:zoom-out;backdrop-filter:blur(6px);">
+  <div data-lightbox-overlay hidden role="dialog" aria-modal="true" aria-label="Zvětšený obrázek" style="position:fixed;inset:0;z-index:90;background:rgba(10,12,8,0.94);display:flex;align-items:center;justify-content:center;padding:clamp(16px,5vw,56px);cursor:zoom-out;backdrop-filter:blur(6px);">
     <img alt="Zvětšená vizualizace" style="max-width:100%;max-height:100%;object-fit:contain;border-radius:4px;box-shadow:0 30px 90px rgba(0,0,0,0.6);" />
-    <span style="position:absolute;top:28px;right:36px;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#cbb98e;">Zavřít ✕</span>
+    <button type="button" data-lightbox-close style="position:absolute;top:14px;right:22px;padding:14px;background:none;border:0;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase;color:#cbb98e;">Zavřít ✕</button>
   </div>'''
 
 
@@ -277,12 +319,52 @@ img{max-width:100%;height:auto;}
 [hidden]{display:none !important;}
 .tab{background:transparent;color:rgba(250,248,242,0.75);transition:background .3s ease,color .3s ease;}
 .tab.is-active{background:#cbb98e;color:#161c11;}
-/* větší dotykové plochy malých odkazů na mobilu */
-@media (max-width:760px){
+/* video: náhled s tlačítkem, iframe vloží main.js po kliknutí */
+.yt{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border-radius:8px;overflow:hidden;background:#161c11 url(/assets/viz/02-3-960.webp) center/cover no-repeat;}
+.yt::before{content:"";position:absolute;inset:0;background:rgba(15,18,12,0.28);transition:background .3s ease;}
+.yt:hover::before{background:rgba(15,18,12,0.12);}
+.yt-play{position:relative;width:clamp(64px,7vw,88px);aspect-ratio:1;border-radius:50%;background:#cbb98e;transition:transform .3s ease,background .3s ease;}
+.yt-play::after{content:"";position:absolute;left:54%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:.7em 0 .7em 1.15em;border-color:transparent transparent transparent #161c11;font-size:clamp(14px,1.5vw,19px);}
+.yt:hover .yt-play{transform:scale(1.06);background:#ffffff;}
+.yt:focus-visible{outline:2px solid #cbb98e;outline-offset:3px;}
+.yt-frame{position:absolute;inset:0;width:100%;height:100%;border:0;display:block;border-radius:8px;}
+/* klávesnice: fokus viditelný na světlém i tmavém pozadí */
+:focus-visible{outline:2px solid #cbb98e;outline-offset:3px;box-shadow:0 0 0 3px #161c11;}
+main:focus{outline:none;box-shadow:none;}
+.vh{position:absolute;width:1px;height:1px;margin:-1px;padding:0;border:0;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+.skip{position:absolute;left:16px;top:-80px;z-index:100;padding:13px 20px;border-radius:100px;background:#cbb98e;color:#161c11;font-family:'DM Sans',sans-serif;font-weight:500;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;transition:top .2s ease;}
+.skip:focus{top:12px;}
+[data-lightbox]{cursor:zoom-in;}
+/* popisek nad h1 leží na fotce */
+main div:has(+ h1){color:#e6d9b4;text-shadow:0 0 3px rgba(15,18,12,0.85),0 1px 16px rgba(15,18,12,0.9);}
+@media (min-width:901px){[data-nav-toggle]{display:none;}}
+@media (max-width:900px){
+  /* hamburger: fokus, křížek po otevření, neprůhledné menu */
+  [data-nav-toggle]:focus-visible + [data-burger]{outline:2px solid #cbb98e;outline-offset:2px;border-radius:6px;}
+  [data-burger] span{transition:transform .25s ease,opacity .2s ease;}
+  [data-nav-toggle]:checked + [data-burger] span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+  [data-nav-toggle]:checked + [data-burger] span:nth-child(2){opacity:0;}
+  [data-nav-toggle]:checked + [data-burger] span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+  header nav[data-nav]{background:#10140d;}
+  /* Domů: dlaždice a text s videem pod sebou i na tabletu */
+  [data-pillars],[data-about]{grid-template-columns:1fr !important;}
+  [data-pillar]{border-right:none !important;border-bottom:1px solid rgba(203,185,142,0.2);padding-left:0 !important;padding-right:0 !important;}
+  [data-pillar]:last-child{border-bottom:none;}
+  /* dotykové plochy aspoň 44 px */
+  header > a{padding:12px 0;margin:-12px 0;}
   footer nav{row-gap:0 !important;}
-  footer nav a,footer > a{display:inline-block;padding:12px 0;}
-  article a[href$=".pdf"]{display:inline-block;padding:12px 0;}
-  a[href^="mailto:"]{display:inline-block;padding:8px 0;}
+  footer nav a,footer > a{display:inline-block;padding:14px 0;}
+  article a{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;}
+  .tab{min-height:44px;}
+  a[href^="mailto:"]{display:inline-block;padding:12px 0;}
+  a[href^="tel:"]{display:inline-block;padding:8px 0;}
+}
+/* dlouhá slova v nadpisech na nejmenších mobilech */
+@media (max-width:430px){.page-development h1{font-size:11vw;}}
+@media (max-width:360px){h2{font-size:30px !important;}}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;}
+  .skip,[data-burger] span{transition:none;}
 }
 '''
 
@@ -325,6 +407,7 @@ def main():
                 helmet_blocks.append(b)
         tpl = tpl.replace(helmet.group(0), '')
         tpl = page_specific(name, tpl)
+        tpl = refine(tpl)
         tpl = rewrite_links(tpl)
         tpl = pictures(tpl)
         tpl = tpl.replace('<iframe ', '<iframe loading="lazy" ')
