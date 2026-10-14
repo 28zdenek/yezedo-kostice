@@ -265,7 +265,8 @@ def pictures(tpl):
         style = style.group(1) if style else ''
         full = 'position:absolute' in style or 'height:clamp' in style
         sizes = '100vw' if full else '(max-width: 760px) 100vw, 50vw'
-        srcset = '/%s 1920w' % info['webp'] if 'webp960' not in info else '/%s 960w, /%s %dw' % (info['webp960'], info['webp'], info['w'])
+        srcset = ', '.join('/%s %dw' % (info['webp%d' % w], w) for w in (960, 1280) if 'webp%d' % w in info)
+        srcset += (', ' if srcset else '') + '/%s %dw' % (info['webp'], info['w'])
         attrs = 'width="%d" height="%d"' % (info['w'], info['h'])
         if first[0]:
             attrs += ' fetchpriority="high"'
