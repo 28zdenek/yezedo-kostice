@@ -18,7 +18,8 @@ OUT = 'dist' if PROD else 'docs'
 SITE = 'https://www.yezedokostice.cz' if PROD else 'https://yezedo.zdenekmatuska.cz'
 # Ostrý web: dokud je True, vyhledávače ho neindexují (meta robots + robots.txt). Po schválení klientem
 # přepnout na False, sestavit a nahrát. Náhled na subdoméně se neindexuje nikdy (byl by duplicitou).
-NOINDEX_PROD = False
+# 23. 10. 2026 vráceno na True: ostrý web je zamčený heslem (login.aspx + web.config).
+NOINDEX_PROD = True
 NOINDEX = NOINDEX_PROD if PROD else True
 
 IMAGES = json.load(open('images.json'))
@@ -428,6 +429,14 @@ main:focus{outline:none;box-shadow:none;}
 .e404-links a{padding:17px 30px;border-radius:100px;border:1px solid rgba(250,248,242,0.4);font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#ffffff;transition:background .3s ease,color .3s ease,border-color .3s ease;}
 .e404-links a:first-child{background:#cbb98e;border-color:#cbb98e;color:#161c11;}
 .e404-links a:hover{background:#ffffff;border-color:#ffffff;color:#161c11;}
+/* přihlášení (login.aspx, jen ostrý web) */
+.login form{display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;max-width:520px;}
+.login label{flex-basis:100%;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,248,242,0.78);}
+.login input{flex:1 1 220px;min-height:52px;box-sizing:border-box;padding:0 22px;border-radius:100px;border:1px solid rgba(250,248,242,0.4);background:transparent;font-family:'DM Sans',sans-serif;font-size:17px;color:#ffffff;}
+.login input:focus{outline:2px solid #cbb98e;outline-offset:2px;}
+.login button{min-height:52px;padding:0 30px;border-radius:100px;border:1px solid #cbb98e;background:#cbb98e;font-family:'DM Sans',sans-serif;font-size:13px;letter-spacing:0.14em;text-transform:uppercase;color:#161c11;cursor:pointer;transition:background .3s ease,border-color .3s ease;}
+.login button:hover{background:#ffffff;border-color:#ffffff;}
+.login .login-err{color:#e6b4a0;}
 .credit{color:rgba(250,248,242,0.82);text-decoration:underline;text-decoration-color:rgba(203,185,142,0.6);text-underline-offset:3px;transition:color .3s ease;}
 .credit:hover{color:#cbb98e;}
 /* popisek nad h1 leží na fotce */
@@ -499,6 +508,70 @@ PAGE_404 = '''<body class="page-404">
 </html>
 '''
 
+# Přihlášení na ostrý web. Heslo ověřuje proti soli a otisku z appSettings ve web.config (dosazuje je build
+# ze souboru .site-password, viz set_password.py) a po správném hesle nastaví cookie s tokenem; bez ní pravidlo
+# URL Rewrite ve web.config nepustí žádný jiný soubor. (Forms autentizace nestačila: hosting běží v klasickém
+# režimu a statické soubory přes ASP.NET nejdou.) Po chybném hesle sekundová pauza proti zkoušení hesel.
+LOGIN_ASPX = '''<%@ Page Language="C#" EnableViewState="false" EnableSessionState="false" %>
+<%@ Import Namespace="System.Configuration" %>
+<%@ Import Namespace="System.Security.Cryptography" %>
+<%@ Import Namespace="System.Text" %>
+<script runat="server">
+string chyba = "";
+void Page_Load(object sender, EventArgs e) {
+    Response.Cache.SetCacheability(HttpCacheability.NoCache);
+    if (Request.HttpMethod != "POST") return;
+    string salt = ConfigurationManager.AppSettings["LoginSalt"] ?? "";
+    string hash = ConfigurationManager.AppSettings["LoginHash"] ?? "";
+    string heslo = Request.Form["heslo"] ?? "";
+    var kdf = new Rfc2898DeriveBytes(Encoding.UTF8.GetBytes(heslo), Encoding.UTF8.GetBytes(salt), 100000);
+    string hex = BitConverter.ToString(kdf.GetBytes(32)).Replace("-", "").ToLowerInvariant();
+    int diff = hex.Length ^ hash.Length;
+    for (int i = 0; i < Math.Min(hex.Length, hash.Length); i++) diff |= hex[i] ^ hash[i];
+    if (hash.Length == 64 && diff == 0) {
+        var cookie = new HttpCookie("yezedo", ConfigurationManager.AppSettings["LoginToken"]);
+        cookie.Expires = DateTime.Now.AddDays(30);
+        cookie.HttpOnly = true;
+        cookie.Secure = true;
+        cookie.Path = "/";
+        Response.Cookies.Add(cookie);
+        // jen adresa na tomto webu, ne přesměrování jinam
+        string zpet = Request.QueryString["ReturnUrl"] ?? "/";
+        if (!zpet.StartsWith("/") || zpet.StartsWith("//") || zpet.StartsWith("/\\\\")) zpet = "/";
+        Response.Redirect(zpet);
+    }
+    System.Threading.Thread.Sleep(1000);
+    chyba = "Heslo nesouhlasí, zkuste to znovu.";
+}
+</script>
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Přihlášení | Yezedo Kostice</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon.png" type="image/png" sizes="48x48">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="stylesheet" href="/styles.css">
+</head>
+<body class="page-404">
+<main class="e404 login">
+  <span class="e404-logo">YEZEDO</span>
+  <h1>Web je zatím neveřejný</h1>
+  <p>Pro zobrazení zadejte heslo, které jste dostali od provozovatele zóny.</p>
+  <form method="post">
+    <label for="heslo">Heslo</label>
+    <input id="heslo" name="heslo" type="password" autocomplete="current-password" required autofocus>
+    <button type="submit">Vstoupit</button>
+  </form>
+  <% if (chyba != "") { %><p class="login-err" role="alert"><%= chyba %></p><% } %>
+</main>
+</body>
+</html>
+'''
+
 
 def main():
     if PROD:
@@ -548,7 +621,16 @@ def main():
                'desc': 'Tato stránka na webu Yezedo Kostice neexistuje.', 'og': PAGES['Domu']['og']}
     open(f'{OUT}/404.html', 'w', encoding='utf-8').write(head('404', meta404, indexable=False) + PAGE_404)
     if PROD:
-        shutil.copy('web.config', f'{OUT}/web.config')
+        # heslo k webu: sůl a otisk jen z .site-password (mimo git), bez něj se ostrý web nesestaví
+        if not os.path.exists('.site-password'):
+            sys.exit('Chybí .site-password – nejdřív spustit python3 set_password.py')
+        auth = json.load(open('.site-password'))
+        config = open('web.config', encoding='utf-8').read()
+        for key in ('salt', 'hash', 'token'):
+            config = config.replace('@@LOGIN_%s@@' % key.upper(), auth[key])
+        open(f'{OUT}/web.config', 'w', encoding='utf-8').write(config)
+        # s BOM, aby ASP.NET četl češtinu jako UTF-8
+        open(f'{OUT}/login.aspx', 'w', encoding='utf-8-sig').write(LOGIN_ASPX)
     else:
         open(f'{OUT}/CNAME', 'w').write('yezedo.zdenekmatuska.cz\n')
         open(f'{OUT}/.nojekyll', 'w').write('')

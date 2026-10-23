@@ -4,3 +4,4 @@ __pycache__/
 dist/
 .deploy-manifest.json
 server-backup-*/
+.site-password
