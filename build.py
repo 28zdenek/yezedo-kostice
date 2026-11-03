@@ -641,7 +641,14 @@ def main():
     # I v neindexovaném režimu pustit roboty sociálních sítí, jinak se při sdílení odkazu nezobrazí náhled
     # (Facebook hlásí 403). Vyhledávače drží venku Disallow a meta robots noindex.
     social = ''.join('User-agent: %s\n' % bot for bot in SOCIAL_BOTS) + 'Allow: /\n\n'
-    robots = social + 'User-agent: *\nDisallow: /\n' if NOINDEX else f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n'
+    # Náhled na subdoméně: roboty pustit dovnitř, aby viděli meta noindex (Disallow by noindex skryl
+    # a Google by mohl URL zaindexovat bez obsahu). 4. 11. 2026.
+    if NOINDEX and PROD:
+        robots = social + 'User-agent: *\nDisallow: /\n'
+    elif NOINDEX:
+        robots = 'User-agent: *\nAllow: /\n'
+    else:
+        robots = f'User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n'
     open(f'{OUT}/robots.txt', 'w').write(robots)
     print('✓ styles.css: %d tříd' % len(sheet.classes))
 
