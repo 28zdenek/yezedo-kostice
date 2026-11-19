@@ -2543,3 +2543,8 @@ figcaption p {
 .inv-hero-facts>div{padding:18px 28px 20px}
 .inv-hero-facts dt{white-space:nowrap}
 @media(max-width:760px){.inv-hero-facts>div{padding:14px 16px}.inv-hero-facts dt{white-space:normal}}
+.inv-chapters a.active span{opacity:0;transform:translateX(-6px)}
+.inv-chapters a:hover span{opacity:1;transform:none}
+.inv-row>div,.inv-form>div{min-width:0}
+.inv-form input:not([type=radio]){min-width:0;max-width:100%}
+.inv-split>*{min-width:0}
