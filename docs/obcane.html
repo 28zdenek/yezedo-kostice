@@ -17,8 +17,8 @@
 <link rel="icon" href="assets/images/mark.png">
 <link rel="preload" href="assets/fonts/BarlowCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/images/existing.webp" imagesrcset="assets/images/existing-small.webp 800w, assets/images/existing.webp 2000w" imagesizes="100vw">
-<link rel="stylesheet" href="styles.css?v=23">
-<script src="app.js?v=18" defer>
+<link rel="stylesheet" href="styles.css?v=25">
+<script src="app.js?v=20" defer>
 </script>
 </head>
 <body data-page="obcane.html">
@@ -42,58 +42,157 @@
 </nav>
 </div>
 </header>
-<main id="obsah" tabindex="-1">
+<main id="obsah" tabindex="-1" class="ob">
 
-<section class="yz-town" id="top">
-<img class="yz-town-photo" src="assets/images/existing.webp" srcset="assets/images/existing-small.webp 800w, assets/images/existing.webp 2000w" sizes="100vw" alt="Letecký pohled na Kostice: v popředí bývalé JZD se sýpkou, za ním obec" width="2000" height="1500" fetchpriority="high">
-<div class="yz-town-inner">
+<section class="ob-hero" id="top">
+<img class="ob-hero-photo" src="assets/images/existing.webp" srcset="assets/images/existing-small.webp 800w, assets/images/existing.webp 2000w" sizes="100vw" alt="Letecký pohled na Kostice: v popředí bývalé JZD se sýpkou, za ním obec" width="2000" height="1500" fetchpriority="high">
+<div class="ob-hero-inner">
 <h1>CO BUDE<br>VE STARÉM JZD?</h1>
-<p class="yz-hero-lead">Bývalé družstvo za obcí se mění. Vznikne tu park s vodou, místo na procházky, kavárna v sýpce a nové haly pro menší firmy. Tady najdete, co to znamená pro vás.</p>
+<p class="inv-lead">Bývalé družstvo za obcí se mění. Vznikne tu park s vodou, místo na procházky, kavárna v sýpce a nové haly pro menší firmy. Tady najdete, co to znamená pro vás.</p>
+<div class="inv-hero-actions">
+<a class="button yz-light" href="#ve-zkratce">Ve zkratce<span aria-hidden="true">↓</span></a>
+<a class="button secondary yz-ghost" href="#dotaz">Zeptat se starosty<span aria-hidden="true">↓</span></a>
+</div>
 </div>
 </section>
 
-<section class="section" id="ve-zkratce">
+<section class="ob-section" id="ve-zkratce">
+<div class="container">
 <h2>ČTYŘI VĚCI,<br>KTERÉ BYSTE MĚLI VĚDĚT.</h2>
-<ol class="yz-short">
-<li><b>01</b><p><strong>Za obcí vznikne park.</strong> S vodou, stromy, lavičkami a vyhlídkou na Pálavu.</p></li>
-<li><b>02</b><p><strong>Areálem se dá projít.</strong> Pěšky i na kole. Nové cesty propojí obec, areál a okolní krajinu.</p></li>
-<li><b>03</b><p><strong>Sýpka zůstane.</strong> Bude v ní kavárna, dílny a sál pro akce. Je to jediná stará budova, která se nezbourá.</p></li>
-<li><b>04</b><p><strong>Žádný těžký průmysl.</strong> Územní plán tu počítá jen s lehkou výrobou a službami.</p></li>
+<ol class="ob-four">
+<li><b>01</b><h3>Za obcí vznikne park.</h3><p>S vodou, stromy, lavičkami a vyhlídkou na Pálavu.</p></li>
+<li><b>02</b><h3>Areálem se dá projít.</h3><p>Pěšky i na kole. Nové cesty propojí obec, areál a okolní krajinu.</p></li>
+<li><b>03</b><h3>Sýpka zůstane.</h3><p>Bude v ní kavárna, dílny a sál pro akce. Je to jediná stará budova, která se nezbourá.</p></li>
+<li><b>04</b><h3>Žádný těžký průmysl.</h3><p>Územní plán tu počítá jen s lehkou výrobou a službami.</p></li>
 </ol>
+</div>
 </section>
 
-<section class="yz-band sage" id="co-tu-bude">
+<section class="ob-section ob-dark" id="dnes-a-potom">
+<div class="container">
+<h2>SÝPKA DNES<br>A ZA PÁR LET.</h2>
+<p class="lead ob-narrow">Bílá sýpka z roku 1955 je dominanta celého areálu. Nezbourá se, ale dostane nový život.</p>
+<div class="ob-compare">
+<figure>
+<span class="ob-badge">Dnes</span>
+<img src="assets/images/open-small.webp" srcset="assets/images/open-small.webp 800w, assets/images/open.webp 1707w" sizes="(max-width: 760px) 100vw, 50vw" alt="Sýpka dnes: lidé u otevřené sýpky při akci pro veřejnost" width="800" height="600" loading="lazy" decoding="async">
+<figcaption>Sýpka se pro veřejnost otevírá už teď, při výstavách a akcích.</figcaption>
+</figure>
+<figure>
+<span class="ob-badge ob-badge-new">Za pár let</span>
+<img src="assets/images/biq-square-small.webp" srcset="assets/images/biq-square-small.webp 800w, assets/images/biq-square.webp 2000w" sizes="(max-width: 760px) 100vw, 50vw" alt="Vizualizace sýpky po proměně s náměstíčkem, stromy a lavičkami" width="800" height="450" loading="lazy" decoding="async">
+<figcaption>Náměstíčko se stromy a kavárnou v přízemí. Vizualizace, jak by to mělo vypadat.</figcaption>
+</figure>
+</div>
+</div>
+</section>
+
+<section class="ob-section" id="co-tu-bude">
 <div class="container">
 <h2>MÍSTO, KAM SE<br>DÁ ZAJÍT I VE VOLNU.</h2>
-<div class="yz-pics">
-<figure>
-<img src="assets/images/climate-small.webp" srcset="assets/images/climate-small.webp 800w, assets/images/climate.webp 2000w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace parku s vyhlídkou, lidé venčí psa a procházejí se" width="800" height="446" loading="lazy" decoding="async">
+<p class="lead ob-narrow">Nový areál nebude jen pro firmy. Velká část je navržená jako veřejný prostor pro lidi z Kostic.</p>
+<div class="ob-mosaic">
+<figure class="ob-tile ob-tile-big">
+<img src="assets/images/climate-small.webp" srcset="assets/images/climate-small.webp 800w, assets/images/climate.webp 2000w" sizes="(max-width: 760px) 100vw, 66vw" alt="Vizualizace parku s vyhlídkou, lidé venčí psa" width="800" height="446" loading="lazy" decoding="async">
 <figcaption><h3>Park s vyhlídkou</h3><p>Největší nádrž na dešťovou vodu bude většinu roku suchým parkem přímo u domů. Z vyhlídky uvidíte až na Pálavu.</p></figcaption>
 </figure>
-<figure>
-<img src="assets/images/square-services-small.webp" srcset="assets/images/square-services-small.webp 800w, assets/images/square-services.webp 1920w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace náměstíčka u vstupu do areálu s lidmi a zelení" width="800" height="455" loading="lazy" decoding="async">
-<figcaption><h3>Náměstíčko u sýpky</h3><p>Velké stromy, stín, lavičky z cihel ze starého družstva a místo na sport. Na posezení po práci i o víkendu.</p></figcaption>
+<figure class="ob-tile">
+<img src="assets/images/square-services-small.webp" srcset="assets/images/square-services-small.webp 800w, assets/images/square-services.webp 1920w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace náměstíčka u vstupu do areálu" width="800" height="455" loading="lazy" decoding="async">
+<figcaption><h3>Náměstíčko</h3><p>Stín velkých stromů a lavičky z cihel ze starého družstva.</p></figcaption>
 </figure>
-<figure>
-<img src="assets/images/biq-cafe-small.webp" srcset="assets/images/biq-cafe-small.webp 800w, assets/images/biq-cafe.webp 2000w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace kavárny v přízemí sýpky BIQ" width="800" height="544" loading="lazy" decoding="async">
-<figcaption><h3>Kavárna a sál v sýpce</h3><p>V přízemí kavárna a dílny, nahoře sál na přednášky, výstavy a setkání a vyhlídková galerie.</p></figcaption>
+<figure class="ob-tile">
+<img src="assets/images/biq-cafe-small.webp" srcset="assets/images/biq-cafe-small.webp 800w, assets/images/biq-cafe.webp 2000w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace kavárny v přízemí sýpky" width="800" height="544" loading="lazy" decoding="async">
+<figcaption><h3>Kavárna v sýpce</h3><p>V přízemí kavárna a dílny, nahoře sál na přednášky a výstavy.</p></figcaption>
+</figure>
+<figure class="ob-tile">
+<img src="assets/images/break-basketball-small.webp" srcset="assets/images/break-basketball-small.webp 800w, assets/images/break-basketball.webp 2000w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace koše na basketbal a posezení mezi halami" width="800" height="450" loading="lazy" decoding="async">
+<figcaption><h3>Sport i klid</h3><p>Koš na basketbal i tichá zákoutí v zeleni.</p></figcaption>
+</figure>
+<figure class="ob-tile">
+<img src="assets/images/water-small.webp" srcset="assets/images/water-small.webp 800w, assets/images/water.webp 2000w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace vodní plochy a cesty v zeleni" width="800" height="450" loading="lazy" decoding="async">
+<figcaption><h3>Voda a zeleň</h3><p>Místo betonu stromy, vodní plochy a cesty. Zeleň v létě ochladí okolí.</p></figcaption>
+</figure>
+<figure class="ob-tile">
+<img src="assets/images/winter-small.webp" srcset="assets/images/winter-small.webp 800w, assets/images/winter.webp 2000w" sizes="(max-width: 760px) 100vw, 33vw" alt="Vizualizace parku a areálu v zimě z výšky" width="800" height="450" loading="lazy" decoding="async">
+<figcaption><h3>I v zimě</h3><p>Park a cesty slouží na procházky po celý rok.</p></figcaption>
 </figure>
 </div>
-<p class="fine yz-note">Obrázky jsou vizualizace. Ukazují, jak by to mělo vypadat, až bude hotovo.</p>
+<p class="fine">Obrázky jsou vizualizace. Ukazují, jak by to mělo vypadat, až bude hotovo.</p>
 </div>
 </section>
 
-<section class="section" id="pro-obec">
-<h2>NEJDE JEN<br>O HALY.</h2>
-<div class="yz-grid yz-grid-plain">
-<article class="yz-card"><h4>Práce blízko domova</h4><p>Nové firmy znamenají práci přímo v Kosticích. Méně dojíždění, víc času doma.</p></article>
-<article class="yz-card"><h4>Voda zůstane v obci</h4><p>Dešťová voda z areálu nebude odtékat pryč. Vsákne se, ochladí okolí a v suchu poslouží na zálivku.</p></article>
-<article class="yz-card"><h4>Vlastní energie</h4><p>Obec připravuje komunitní energetickou síť KES Kostice. Cílem je využívat místní zdroje energie a ztrácet jí co nejméně.</p></article>
-<article class="yz-card yz-todo"><h4>Levnější popelnice?</h4><p><span class="yz-todo-tag">Doplní obec</span> Jak se příjmy ze zóny promítnou do poplatku za odpad: o kolik a od kdy.</p></article>
+<section class="ob-section ob-sage" id="kudy">
+<div class="container ob-split">
+<div>
+<h2>KUDY SE<br>PROJDETE.</h2>
+<p class="lead">Areál je navržený tak, aby se jím dalo projít z obce do krajiny. Auta, chodci i cyklisté sdílejí jeden veřejný prostor.</p>
+<ol class="ob-places">
+<li><b>1</b><div><h3>Sýpka a náměstíčko</h3><p>Kavárna, lavičky ve stínu stromů a místo na akce.</p></div></li>
+<li><b>5</b><div><h3>Společný parter</h3><p>Posezení a zeleň mezi sýpkou a halami.</p></div></li>
+<li><b>6</b><div><h3>Park s vodou a vyhlídkou</h3><p>Největší zelená plocha přímo u domů, s vyhlídkou na Pálavu.</p></div></li>
+</ol>
+</div>
+<figure class="ob-plan">
+<img src="assets/images/plan-small.webp" srcset="assets/images/plan-small.webp 800w, assets/images/plan.webp 1662w" sizes="(max-width: 980px) 100vw, 55vw" alt="Situace areálu s očíslovanými místy: 1 sýpka, 5 společný parter, 6 park s vodou" width="800" height="410" loading="lazy" decoding="async">
+<figcaption>Čísla odpovídají místům v seznamu. Návrhová situace 07/2026.</figcaption>
+</figure>
 </div>
 </section>
 
-<section class="section" id="otazky">
+<section class="ob-section" id="kdy">
+<div class="container">
+<h2>CO SE KDY<br>STANE.</h2>
+<ol class="ob-time">
+<li class="done"><b>Hotovo</b><h3>2024–2026</h3><p>Obec postavila cesty, vodovod, kanalizaci, osvětlení a elektřinu. Pomohla dotace ministerstva.</p></li>
+<li class="now"><b>Teď</b><h3>2026</h3><p>Architekti dokončili návrh celého areálu i proměny sýpky. Pořádají se první výstavy a akce.</p></li>
+<li><b>Čeká se</b><h3>Konec 2027</h3><p>Stavební povolení pro sýpku a prvních šest hal.</p></li>
+<li><b>Plán</b><h3>2028</h3><p>Začne stavba: nejdřív sýpka a první haly.</p></li>
+</ol>
+</div>
+</section>
+
+<section class="ob-section ob-tint" id="pro-obec">
+<div class="container">
+<h2>CO Z TOHO<br>BUDE MÍT OBEC.</h2>
+<div class="ob-gains">
+<article><h3>Práce blízko domova</h3><p>Nové firmy znamenají práci přímo v Kosticích. Méně dojíždění, víc času doma.</p></article>
+<article><h3>Voda zůstane v obci</h3><p>Dešťová voda z areálu nebude odtékat pryč. Vsákne se, ochladí okolí a v suchu poslouží na zálivku.</p></article>
+<article><h3>Vlastní energie</h3><p>Obec připravuje komunitní energetickou síť KES Kostice, aby se využívaly místní zdroje a energie se zbytečně neztrácela.</p></article>
+<article class="yz-todo"><h3>Levnější popelnice?</h3><p><span class="yz-todo-tag">Doplní obec</span> Jak se příjmy ze zóny promítnou do poplatku za odpad: o kolik a od kdy.</p></article>
+</div>
+</div>
+</section>
+
+<section class="ob-section" id="uz-ted">
+<div class="container">
+<h2>UŽ TEĎ SE TU<br>NĚCO DĚJE.</h2>
+<p class="lead ob-narrow">Ještě se nestaví, ale sýpka už žije. Přijďte se podívat při další akci.</p>
+<div class="ob-news">
+<article>
+<img src="assets/images/news-nezaznamenane-pribehy.webp" alt="Výstava Nezaznamenané příběhy v sýpce" width="1000" height="703" loading="lazy" decoding="async">
+<p class="ob-date">28. 8. 2026</p>
+<h3>Výstava Nezaznamenané příběhy</h3>
+<p>Fotografie a předměty z bývalého JZD. Vernisáž poprvé otevřela sýpku veřejnosti.</p>
+</article>
+<article>
+<img src="assets/images/news-novy-dech.webp" alt="Výstava YEZEDO, Stay BIQ / Nový dech" width="1000" height="750" loading="lazy" decoding="async">
+<p class="ob-date">5. 9. 2026</p>
+<h3>Výstava Nový dech</h3>
+<p>Návrh areálu a proměny sýpky si lidé mohli prohlédnout i při Dni obce Kostice.</p>
+</article>
+<article>
+<img src="assets/images/news-gabionova-lavicka.webp" alt="Lavička z gabionu a zachráněných cihel před sýpkou" width="1000" height="750" loading="lazy" decoding="async">
+<p class="ob-date">24. 8. 2026</p>
+<h3>Lavička z cihel starého JZD</h3>
+<p>Před sýpkou vznikla první lavička z materiálu, který zůstal v areálu.</p>
+</article>
+</div>
+<a class="button secondary" href="aktuality.html">Všechny aktuality<span aria-hidden="true">↗</span></a>
+</div>
+</section>
+
+<section class="ob-section ob-tint" id="otazky">
+<div class="container">
 <h2>OTÁZKY<br>A ODPOVĚDI.</h2>
 <div class="yz-faq">
 <details open>
@@ -125,18 +224,20 @@
 <p>Ano, při akcích. V sýpce už proběhly výstavy Nezaznamenané příběhy a Nový dech. O dalších akcích píšeme v <a href="aktuality.html">Aktualitách</a>.</p>
 </details>
 </div>
+</div>
 </section>
 
-<section class="next-step">
-<div class="next-inner">
+<section class="ob-section ob-dark" id="dotaz">
+<div class="container ob-split">
+<figure class="ob-mayor">
+<img src="assets/images/mayor-small.webp?v=20261117" srcset="assets/images/mayor-small.webp?v=20261117 800w, assets/images/mayor.webp?v=20261117 2000w" sizes="(max-width: 980px) 100vw, 45vw" alt="Starosta Libor Balga" width="800" height="452" loading="lazy" decoding="async">
+</figure>
 <div>
-<h2>ZEPTEJTE SE<br>STAROSTY.</h2>
-<p>Libor Balga, starosta obce Kostice<br><a href="tel:+420725111277">+420 725 111 277</a> · <a href="mailto:starosta@kostice.cz">starosta@kostice.cz</a></p>
-<a class="button" href="kontakt.html?role=obcan#poptavka">Napsat dotaz<span aria-hidden="true">↗</span></a>
+<h2>MÁTE JINOU<br>OTÁZKU?</h2>
+<p class="lead">Zeptejte se přímo starosty obce. Zavolejte, napište e-mail, nebo pošlete dotaz přes formulář.</p>
+<p class="ob-contact"><b>Libor Balga</b>starosta obce Kostice<br><a href="tel:+420725111277">+420 725 111 277</a> · <a href="mailto:starosta@kostice.cz">starosta@kostice.cz</a></p>
+<a class="button yz-light" href="kontakt.html?role=obcan#poptavka">Napsat dotaz<span aria-hidden="true">↗</span></a>
 </div>
-<a class="next-photo" href="pribeh.html" aria-label="Příběh místa a lidé za projektem">
-<img src="assets/images/open-small.webp" srcset="assets/images/open-small.webp 800w, assets/images/open.webp 1707w" sizes="(max-width: 800px) 100vw, 600px" alt="Lidé při otevření sýpky veřejnosti" width="800" height="600" loading="lazy" decoding="async">
-</a>
 </div>
 </section>
 </main>

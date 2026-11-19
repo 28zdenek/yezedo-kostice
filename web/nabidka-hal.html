@@ -15,8 +15,9 @@
 <meta property="og:image" content="https://www.yezedokostice.cz/assets/images/hero.webp">
 <link rel="icon" href="assets/images/mark.png">
 <link rel="preload" href="assets/fonts/BarlowCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=23">
-<script src="app.js?v=18" defer>
+<link rel="preload" as="image" href="assets/images/life.webp" imagesrcset="assets/images/life-small.webp 800w, assets/images/life.webp 2000w" imagesizes="100vw">
+<link rel="stylesheet" href="styles.css?v=25">
+<script src="app.js?v=20" defer>
 </script>
 </head>
 <body data-page="nabidka-hal.html">
@@ -41,13 +42,59 @@
 </div>
 </header>
 <main id="obsah" tabindex="-1">
-<section class="page-heading " id="top">
-<div class="container">
-<p class="eyebrow">Yezedo Development / Nabídka hal</p>
+<!--SUBHERO-->
+<section class="sub-hero" id="top">
+<img class="sub-hero-photo" src="assets/images/life.webp" srcset="assets/images/life-small.webp 800w, assets/images/life.webp 2000w" sizes="100vw" alt="" width="2000" height="1125" fetchpriority="high">
+<div class="sub-hero-inner">
+<p class="inv-kicker"><span>Nabídka hal</span><span>Yezedo Development / Nabídka hal</span></p>
 <h1>NAJDĚTE PROSTOR.<br>DEJTE MU SVŮJ SMĚR.</h1>
-<p class="lead">Výroba, technologie i služby. Šest hal v měřítku místa, s dispozicí podle potřeb vaší firmy.</p>
+<p class="inv-lead">Výroba, technologie i služby. Šest hal v měřítku místa, s dispozicí podle potřeb vaší firmy.</p>
+<div class="inv-hero-actions">
+<a class="button yz-light" href="index.html#napiste-nam">Domluvit jednání<span aria-hidden="true">↗</span></a>
+<a class="button secondary yz-ghost" href="#mapa">Vybrat halu na mapě<span aria-hidden="true">↓</span></a>
+</div>
 </div>
 </section>
+<!--/SUBHERO-->
+<!--HMAP2-->
+<section class="inv-chapter inv-sage hall-where" id="mapa">
+<div class="container">
+<p class="inv-num">Haly na mapě</p>
+<h2>VYBERTE SI HALU.</h2>
+<p class="lead inv-narrow">Šest hal o celkové zastavěné ploše 10 176 m², od 648 do 4 488 m². Klikněte na halu a otevře se její detail s parametry, výkresy a polohou v areálu.</p>
+<div class="hmap">
+<img src="assets/images/plan.webp" srcset="assets/images/plan-small.webp 800w, assets/images/plan.webp 1662w" sizes="(max-width: 1240px) 100vw, 1240px" alt="Návrhová situace smartzóny Yezedo" width="1662" height="852" loading="lazy" decoding="async">
+<svg viewBox="0 0 1662 852" role="group" aria-label="Haly na situaci areálu">
+<a href="hala-so03.html" class="hmap-hall" data-hall="SO03" aria-label="Hala SO03, 1 296 m²">
+<rect x="243" y="320" width="171" height="86" rx="3"/>
+<g class="hmap-tag" transform="translate(293 346)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO03</text></g>
+</a>
+<a href="hala-so04.html" class="hmap-hall" data-hall="SO04" aria-label="Hala SO04, 1 584 m²">
+<rect x="473" y="322" width="212" height="82" rx="3"/>
+<g class="hmap-tag" transform="translate(523 348)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO04</text></g>
+</a>
+<a href="hala-so05.html" class="hmap-hall" data-hall="SO05" aria-label="Hala SO05, 648 m²">
+<rect x="622" y="423" width="64" height="131" rx="3"/>
+<g class="hmap-tag" transform="translate(654 449)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO05</text></g>
+</a>
+<a href="hala-so06.html" class="hmap-hall" data-hall="SO06" aria-label="Hala SO06, 4 488 m²">
+<rect x="716" y="390" width="226" height="232" rx="3"/>
+<g class="hmap-tag" transform="translate(766 416)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO06</text></g>
+</a>
+<a href="hala-so07.html" class="hmap-hall" data-hall="SO07" aria-label="Hala SO07, 1 188 m²">
+<rect x="263" y="200" width="197" height="63" rx="3"/>
+<g class="hmap-tag" transform="translate(313 226)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO07</text></g>
+</a>
+<a href="hala-so09.html" class="hmap-hall" data-hall="SO09" aria-label="Hala SO09, 972 m²">
+<rect x="258" y="570" width="178" height="66" rx="3"/>
+<g class="hmap-tag" transform="translate(308 596)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO09</text></g>
+</a>
+</svg>
+</div>
+<p class="fine">Návrhová situace: Zásady rozvoje Smartzóny YEZEDO Kostice, 07/2026.</p>
+</div>
+</section>
+<!--/HMAP2-->
 <div class="container">
 <nav class="hall-jumps" aria-label="Výběr haly">
 <a href="#SO03">SO03<span>1 296 m² ↓</span>
@@ -90,6 +137,7 @@
 </dl>
 <p>Pět sekcí o šířce 9–12 m s vlastními vjezdy z obou stran haly.</p>
 <div class="actions">
+<a class="button secondary hall-detail" href="hala-so03.html">Detail haly<span aria-hidden="true">↗</span></a>
 <a class="button" href="kontakt.html?hala=SO03#poptavka">Mám zájem o SO03<span aria-hidden="true">↗</span>
 </a>
 <a class="text-link" href="assets/docs/SO03-pudorys.pdf" target="_blank" rel="noopener">Půdorys ↓</a>
@@ -121,6 +169,7 @@
 </dl>
 <p>Pět sekcí o šířce 12–15 m, největší z řady hal šířky 24 m.</p>
 <div class="actions">
+<a class="button secondary hall-detail" href="hala-so04.html">Detail haly<span aria-hidden="true">↗</span></a>
 <a class="button" href="kontakt.html?hala=SO04#poptavka">Mám zájem o SO04<span aria-hidden="true">↗</span>
 </a>
 <a class="text-link" href="assets/docs/SO04-pudorys.pdf" target="_blank" rel="noopener">Půdorys ↓</a>
@@ -152,6 +201,7 @@
 </dl>
 <p>Kompaktní hala se třemi sekcemi po 12 m pro menší provozy a služby.</p>
 <div class="actions">
+<a class="button secondary hall-detail" href="hala-so05.html">Detail haly<span aria-hidden="true">↗</span></a>
 <a class="button" href="kontakt.html?hala=SO05#poptavka">Mám zájem o SO05<span aria-hidden="true">↗</span>
 </a>
 <a class="text-link" href="assets/docs/SO05-pudorys.pdf" target="_blank" rel="noopener">Půdorys ↓</a>
@@ -179,6 +229,7 @@
 </dl>
 <p>Největší hala v areálu. Prostor pro rozsáhlejší výrobní záměry.</p>
 <div class="actions">
+<a class="button secondary hall-detail" href="hala-so06.html">Detail haly<span aria-hidden="true">↗</span></a>
 <a class="button" href="kontakt.html?hala=SO06#poptavka">Mám zájem o SO06<span aria-hidden="true">↗</span>
 </a>
 <a class="text-link" href="assets/docs/SO06-pudorys.pdf" target="_blank" rel="noopener">Půdorys ↓</a>
@@ -213,6 +264,7 @@
 </dl>
 <p>Dvě sekce po 33 m s technickým zázemím areálu.</p>
 <div class="actions">
+<a class="button secondary hall-detail" href="hala-so07.html">Detail haly<span aria-hidden="true">↗</span></a>
 <a class="button" href="kontakt.html?hala=SO07#poptavka">Mám zájem o SO07<span aria-hidden="true">↗</span>
 </a>
 <a class="text-link" href="assets/docs/SO07-pudorys.pdf" target="_blank" rel="noopener">Půdorys ↓</a>
@@ -247,6 +299,7 @@
 </dl>
 <p>Pět sekcí o šířce 9–12 m v užší hale hloubky 18 m.</p>
 <div class="actions">
+<a class="button secondary hall-detail" href="hala-so09.html">Detail haly<span aria-hidden="true">↗</span></a>
 <a class="button" href="kontakt.html?hala=SO09#poptavka">Mám zájem o SO09<span aria-hidden="true">↗</span>
 </a>
 <a class="text-link" href="assets/docs/SO09-pudorys.pdf" target="_blank" rel="noopener">Půdorys ↓</a>

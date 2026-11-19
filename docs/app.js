@@ -238,3 +238,14 @@
   if (r) r.checked = true;
   if (!form.zprava.value) form.zprava.value = `Mám zájem o halu ${hala}. `;
 })();
+
+// Postupné odkrývání obsahu na podstránkách (hlavní stránka má vlastní .inv-reveal)
+(() => {
+  if (document.querySelector('main.inv') || !('IntersectionObserver' in window)) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  document.documentElement.classList.add('js');
+  const sel = 'main section:not(.sub-hero):not(.cover) h2, main .prose, main .photo, main .photo-pair, main .principles > *, main .hall-card, main .timeline li, main .text-item, main .hmap, main .yz-card, main .yz-pics > figure, main .yz-short li, main .yz-faq, main .news-section article, main .floor-line, main .steps > li, main .responsibilities article, main .technology-list li, main .ob-four li, main .ob-compare figure, main .ob-tile, main .ob-places li, main .ob-time li, main .ob-gains article, main .ob-news article, main .ob-plan, main .ob-mayor';
+  const els = [...document.querySelectorAll(sel)].filter(el => el.getBoundingClientRect().top > innerHeight * 0.9);
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -6% 0px'});
+  els.forEach(el => { el.classList.add('rv'); io.observe(el); });
+})();

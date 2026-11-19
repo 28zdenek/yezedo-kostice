@@ -15,8 +15,9 @@
 <meta property="og:image" content="https://www.yezedokostice.cz/assets/images/hero.webp">
 <link rel="icon" href="assets/images/mark.png">
 <link rel="preload" href="assets/fonts/BarlowCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=23">
-<script src="app.js?v=18" defer>
+<link rel="preload" as="image" href="assets/images/biq-square.webp" imagesrcset="assets/images/biq-square-small.webp 800w, assets/images/biq-square.webp 2000w" imagesizes="100vw">
+<link rel="stylesheet" href="styles.css?v=25">
+<script src="app.js?v=20" defer>
 </script>
 </head>
 <body data-page="biq.html">
@@ -41,13 +42,20 @@
 </div>
 </header>
 <main id="obsah" tabindex="-1">
-<section class="page-heading " id="top">
-<div class="container">
-<p class="eyebrow">Sýpka BIQ / Bílá ikona Kostic</p>
+<!--SUBHERO-->
+<section class="sub-hero" id="top">
+<img class="sub-hero-photo" src="assets/images/biq-square.webp" srcset="assets/images/biq-square-small.webp 800w, assets/images/biq-square.webp 2000w" sizes="100vw" alt="" width="2000" height="1125" fetchpriority="high">
+<div class="sub-hero-inner">
+<p class="inv-kicker"><span>Sýpka BIQ</span><span>Sýpka BIQ / Bílá ikona Kostic</span></p>
 <h1>SÝPKA.<br>SRDCE AREÁLU.</h1>
-<p class="lead">Paměť místa a nová budoucnost. Jediná původní stavba, která zůstane zachována.</p>
+<p class="inv-lead">Paměť místa a nová budoucnost. Jediná původní stavba, která zůstane zachována.</p>
+<div class="inv-hero-actions">
+<a class="button yz-light" href="index.html#napiste-nam">Domluvit jednání<span aria-hidden="true">↗</span></a>
+<a class="button secondary yz-ghost" href="#podlazi">Tři podlaží<span aria-hidden="true">↓</span></a>
+</div>
 </div>
 </section>
+<!--/SUBHERO-->
 <div class="container">
 <figure class="photo hero-photo">
 <img src="assets/images/biq-front.webp" srcset="assets/images/biq-front-small.webp 800w, assets/images/biq-front.webp 2000w" sizes="(max-width: 800px) 100vw, 1200px" alt="Návrh konverze sýpky BIQ" width="2000" height="1125" loading="eager" decoding="async" fetchpriority="high">

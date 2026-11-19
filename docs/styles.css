@@ -2618,3 +2618,115 @@ figcaption p {
 .hall-pager-all{font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:3px}
 @media(max-width:980px){.hall-cols{grid-template-columns:1fr}.hall-params{position:static}.hall-key{grid-template-columns:1fr 1fr}}
 @media(max-width:760px){.hall-feats{grid-template-columns:1fr}.hall-params dl>div{grid-template-columns:1fr;gap:2px}.hall-pager{grid-template-columns:1fr 1fr}.hall-pager-all{grid-column:1/-1;grid-row:2;justify-self:center}}
+
+/* ===== Úvod podstránek (sub-hero) a odkrývání na všech stránkách ===== */
+.sub-hero{position:relative;min-height:540px;height:calc(78svh - var(--header));max-height:820px;overflow:hidden;background:#151914;color:var(--paper);display:flex;align-items:flex-end}
+.sub-hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.03);animation:inv-zoom 30s ease-out forwards}
+.sub-hero:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,#111510e6 0%,#111510a6 38%,#11151026 75%),linear-gradient(0deg,#111510e6 0%,#11151000 50%),linear-gradient(180deg,#11151080 0%,#11151000 25%)}
+.sub-hero-inner{position:relative;z-index:1;width:calc(100% - var(--gutter)*2);max-width:var(--content);margin:0 auto;padding-bottom:clamp(40px,7vh,72px)}
+.sub-hero h1{font-size:clamp(50px,6.6vw,108px);line-height:.94;margin-bottom:22px}
+.sub-hero .inv-lead{max-width:620px}
+.hall-detail{margin-right:4px}
+.js .rv{opacity:0;transform:translateY(24px);transition:opacity .8s ease,transform .8s ease}
+.js .rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.sub-hero-photo{animation:none;transform:none}.js .rv{opacity:1;transform:none;transition:none}}
+@media(max-width:760px){
+  .sub-hero{height:auto;min-height:calc(88svh - var(--header));max-height:none}
+  .sub-hero:after{background:linear-gradient(0deg,#111510f5 0%,#111510cc 55%,#11151055 100%)}
+  .sub-hero-inner{padding-top:120px}
+  .sub-hero h1{font-size:clamp(42px,12vw,64px)}
+  .sub-hero .inv-hero-actions .button{width:100%}
+}
+
+/* ===== Stránka Pro občany v2 (ob-) ===== */
+.ob-hero{position:relative;min-height:620px;height:calc(100svh - var(--header));max-height:1000px;overflow:hidden;background:#151914;color:var(--paper);display:flex;align-items:flex-end}
+.ob-hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%;transform:scale(1.03);animation:inv-zoom 30s ease-out forwards}
+.ob-hero:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#111510f0 0%,#111510a8 38%,#11151020 72%,#11151066 100%)}
+.ob-hero-inner{position:relative;z-index:1;width:calc(100% - var(--gutter)*2);max-width:var(--content);margin:0 auto;padding-bottom:clamp(44px,8vh,84px)}
+.ob-hero h1{font-size:clamp(56px,8vw,132px);line-height:.92;margin-bottom:24px}
+.ob-hero .inv-lead{max-width:640px}
+.ob-section{padding:clamp(80px,10vw,140px) 0}
+.ob-section h2{font-size:clamp(44px,5.6vw,88px);line-height:.96}
+.ob-dark{background:var(--ink);color:var(--paper)}
+.ob-sage{background:var(--sage)}
+.ob-tint{background:#e9e7dd}
+.ob-narrow{max-width:760px}
+.ob-dark .lead{color:#f3f1eae6}
+.ob-four{list-style:none;padding:0;margin:56px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:36px}
+.ob-four li{border-top:3px solid var(--ink);padding-top:22px}
+.ob-four b{display:block;font:700 64px/.9 BarlowCondensed,'Arial Narrow',sans-serif;color:var(--sage);-webkit-text-stroke:1px var(--ink);margin-bottom:16px}
+.ob-four h3{font-size:30px;line-height:1.05;margin-bottom:10px}
+.ob-four p{font-size:18px;line-height:1.55;margin:0}
+.ob-compare{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:50px}
+.ob-compare figure{position:relative;margin:0}
+.ob-compare img{width:100%;aspect-ratio:1.4;object-fit:cover}
+.ob-compare figcaption{font-size:16px;margin-top:12px;color:#f3f1eacc}
+.ob-badge{position:absolute;top:16px;left:16px;z-index:1;background:var(--paper);color:var(--ink);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;padding:7px 12px}
+.ob-badge-new{background:var(--sage)}
+.ob-mosaic{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin:50px 0 18px}
+.ob-tile{margin:0;position:relative;overflow:hidden;background:var(--ink);color:var(--paper)}
+.ob-tile img{width:100%;height:100%;aspect-ratio:1.25;object-fit:cover;transition:transform .6s ease}
+.ob-tile:hover img{transform:scale(1.04)}
+.ob-tile figcaption{position:absolute;left:0;right:0;bottom:0;padding:60px 22px 20px;background:linear-gradient(0deg,#111510e6,#11151000)}
+.ob-tile h3{font-size:28px;margin:0 0 4px}
+.ob-tile p{font-size:15.5px;line-height:1.45;margin:0;color:#f3f1eae6}
+.ob-tile-big{grid-column:span 2;grid-row:span 2}
+.ob-tile-big img{aspect-ratio:auto}
+.ob-tile-big h3{font-size:clamp(32px,3vw,46px)}
+.ob-tile-big p{font-size:18px;max-width:560px}
+.ob-split{display:grid;grid-template-columns:1fr 1.25fr;gap:clamp(40px,6vw,90px);align-items:center}
+.ob-split>*{min-width:0}
+.ob-places{list-style:none;padding:0;margin:34px 0 0}
+.ob-places li{display:flex;gap:18px;padding:18px 0;border-top:1px solid #2227214d}
+.ob-places b{display:grid;place-items:center;flex:0 0 40px;height:40px;background:var(--ink);color:var(--paper);font:700 18px Barlow}
+.ob-places h3{font-size:25px;margin:2px 0 4px}
+.ob-places p{font-size:16.5px;margin:0}
+.ob-plan{margin:0}
+.ob-plan img{width:100%;height:auto;border:8px solid #f3f1ea}
+.ob-plan figcaption{font-size:14px;margin-top:10px}
+.ob-time{list-style:none;padding:0;margin:56px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:3px solid var(--line)}
+.ob-time li{position:relative;padding:34px 26px 0 0}
+.ob-time li:before{content:'';position:absolute;top:-11px;left:0;width:18px;height:18px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.ob-time li.done:before{background:var(--ink)}
+.ob-time li.now:before{background:var(--sage);box-shadow:0 0 0 6px #c6d3a988}
+.ob-time b{display:inline-block;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:3px 8px;border:1px solid var(--ink);margin-bottom:12px}
+.ob-time li.done b{background:var(--ink);color:var(--paper)}
+.ob-time li.now b{background:var(--sage)}
+.ob-time h3{font-size:34px;margin:0 0 8px}
+.ob-time p{font-size:17px;margin:0}
+.ob-gains{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:50px}
+.ob-gains article{background:var(--paper);padding:28px 24px;border-top:4px solid var(--ink)}
+.ob-gains article.yz-todo{background:transparent;border:2px dashed #bd652f}
+.ob-gains h3{font-size:26px;margin-bottom:10px}
+.ob-gains p{font-size:16.5px;margin:0}
+.ob-news{display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin:50px 0 36px}
+.ob-news img{width:100%;aspect-ratio:1.4;object-fit:cover;margin-bottom:16px}
+.ob-date{font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.ob-news h3{font-size:25px;margin-bottom:8px}
+.ob-news p:not(.ob-date){font-size:16.5px;margin:0}
+.ob-mayor{margin:0}
+.ob-mayor img{width:100%;aspect-ratio:1.15;object-fit:cover}
+.ob-contact{font-size:18px;margin:26px 0 30px;padding:20px 0;border-top:1px solid #f3f1ea33;border-bottom:1px solid #f3f1ea33}
+.ob-contact b{display:block;font:700 26px BarlowCondensed,'Arial Narrow',sans-serif}
+.ob-contact a{color:var(--sage)}
+.ob .yz-faq{max-width:none}
+@media(prefers-reduced-motion:reduce){.ob-hero-photo{animation:none;transform:none}}
+@media(max-width:980px){
+  .ob-four,.ob-gains{grid-template-columns:1fr 1fr}
+  .ob-split{grid-template-columns:1fr}
+  .ob-mosaic{grid-template-columns:1fr 1fr}
+  .ob-tile-big{grid-column:span 2;grid-row:auto}
+  .ob-tile-big img{aspect-ratio:1.6}
+  .ob-news{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .ob-hero{height:auto;min-height:calc(100svh - var(--header));max-height:none}
+  .ob-hero-inner{padding-top:120px}
+  .ob-hero h1{font-size:clamp(46px,13vw,72px)}
+  .ob-hero .inv-hero-actions .button{width:100%}
+  .ob-four,.ob-gains,.ob-compare,.ob-mosaic,.ob-news{grid-template-columns:1fr}
+  .ob-tile-big{grid-column:auto}
+  .ob-time{grid-template-columns:1fr;border-top:0;border-left:3px solid var(--line);margin-left:9px}
+  .ob-time li{padding:0 0 30px 30px}
+  .ob-time li:before{top:4px;left:-11px}
+}

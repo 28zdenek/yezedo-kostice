@@ -16,8 +16,9 @@
 <meta property="og:image" content="https://www.yezedokostice.cz/assets/images/hero.webp">
 <link rel="icon" href="assets/images/mark.png">
 <link rel="preload" href="assets/fonts/BarlowCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=23">
-<script src="app.js?v=18" defer>
+<link rel="preload" as="image" href="assets/images/hero.webp" imagesrcset="assets/images/hero-small.webp 800w, assets/images/hero.webp 2000w" imagesizes="100vw">
+<link rel="stylesheet" href="styles.css?v=25">
+<script src="app.js?v=20" defer>
 </script>
 </head>
 <body data-page="areal.html">
@@ -42,13 +43,20 @@
 </div>
 </header>
 <main id="obsah" tabindex="-1">
-<section class="page-heading " id="top">
-<div class="container">
-<p class="eyebrow">Smartzóna Yezedo / Areál</p>
+<!--SUBHERO-->
+<section class="sub-hero" id="top">
+<img class="sub-hero-photo" src="assets/images/hero.webp" srcset="assets/images/hero-small.webp 800w, assets/images/hero.webp 2000w" sizes="100vw" alt="" width="2000" height="1328" fetchpriority="high">
+<div class="sub-hero-inner">
+<p class="inv-kicker"><span>Areál</span><span>Smartzóna Yezedo / Areál</span></p>
 <h1>JEDEN AREÁL.<br>PROPOJENÝ SYSTÉM.</h1>
-<p class="lead">Místo pro firmy. Prostor pro lidi. Architektura, voda, zeleň a energie v jednom promyšleném celku.</p>
+<p class="inv-lead">Místo pro firmy. Prostor pro lidi. Architektura, voda, zeleň a energie v jednom promyšleném celku.</p>
+<div class="inv-hero-actions">
+<a class="button yz-light" href="index.html#napiste-nam">Domluvit jednání<span aria-hidden="true">↗</span></a>
+<a class="button secondary yz-ghost" href="nabidka-hal.html#mapa">Haly na mapě<span aria-hidden="true">↗</span></a>
+</div>
 </div>
 </section>
+<!--/SUBHERO-->
 <div class="container">
 <figure class="photo hero-photo">
 <img src="assets/images/panorama.webp" srcset="assets/images/panorama-small.webp 800w, assets/images/panorama.webp 2000w" sizes="(max-width: 800px) 100vw, 1200px" alt="Letecká vizualizace celého areálu Yezedo" width="2400" height="1204" loading="eager" decoding="async" fetchpriority="high">
@@ -197,37 +205,37 @@
 </a>
 </div>
 <div class="hall-list">
-<a href="nabidka-hal.html#SO03">
+<a href="hala-so03.html">
 <strong>SO03</strong>
 <span>54 × 24 m</span>
 <b>1 296 m²</b>
 <span aria-hidden="true">↗</span>
 </a>
-<a href="nabidka-hal.html#SO04">
+<a href="hala-so04.html">
 <strong>SO04</strong>
 <span>66 × 24 m</span>
 <b>1 584 m²</b>
 <span aria-hidden="true">↗</span>
 </a>
-<a href="nabidka-hal.html#SO05">
+<a href="hala-so05.html">
 <strong>SO05</strong>
 <span>36 × 18 m</span>
 <b>648 m²</b>
 <span aria-hidden="true">↗</span>
 </a>
-<a href="nabidka-hal.html#SO06">
+<a href="hala-so06.html">
 <strong>SO06</strong>
 <span>68 × 66 m</span>
 <b>4 488 m²</b>
 <span aria-hidden="true">↗</span>
 </a>
-<a href="nabidka-hal.html#SO07">
+<a href="hala-so07.html">
 <strong>SO07</strong>
 <span>66 × 18 m</span>
 <b>1 188 m²</b>
 <span aria-hidden="true">↗</span>
 </a>
-<a href="nabidka-hal.html#SO09">
+<a href="hala-so09.html">
 <strong>SO09</strong>
 <span>54 × 18 m</span>
 <b>972 m²</b>
@@ -245,7 +253,7 @@
 <img src="assets/images/so06.webp" srcset="assets/images/so06-small.webp 800w, assets/images/so06.webp 2000w" sizes="(max-width: 800px) 100vw, 1200px" alt="Největší hala SO06" width="2000" height="1000" loading="lazy" decoding="async">
 <figcaption>SO06 / NEJVĚTŠÍ HALA V AREÁLU / 68 × 66 M</figcaption>
 </figure>
-<a class="button" href="nabidka-hal.html#SO06">Prohlédnout halu SO06<span aria-hidden="true">↗</span>
+<a class="button" href="hala-so06.html">Prohlédnout halu SO06<span aria-hidden="true">↗</span>
 </a>
 </section>
 <section class="section ">

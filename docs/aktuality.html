@@ -16,8 +16,9 @@
 <meta property="og:image" content="https://www.yezedokostice.cz/assets/images/hero.webp">
 <link rel="icon" href="assets/images/mark.png">
 <link rel="preload" href="assets/fonts/BarlowCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=23">
-<script src="app.js?v=18" defer>
+<link rel="preload" as="image" href="assets/images/open.webp" imagesrcset="assets/images/open-small.webp 800w, assets/images/open.webp 1707w" imagesizes="100vw">
+<link rel="stylesheet" href="styles.css?v=25">
+<script src="app.js?v=20" defer>
 </script>
 </head>
 <body data-page="aktuality.html">
@@ -42,12 +43,19 @@
 </div>
 </header>
 <main id="obsah" tabindex="-1">
-<section class="page-heading sage" id="top">
-<div class="container">
+<!--SUBHERO-->
+<section class="sub-hero" id="top">
+<img class="sub-hero-photo" src="assets/images/open.webp" srcset="assets/images/open-small.webp 800w, assets/images/open.webp 1707w" sizes="100vw" alt="" width="1707" height="1280" fetchpriority="high">
+<div class="sub-hero-inner">
+<p class="inv-kicker"><span>Aktuality</span><span>Smartzóna YEZEDO Kostice</span></p>
 <h1>AKTUALITY</h1>
-<p class="lead">Co se děje v areálu YEZEDO a sýpce BIQ.</p>
+<p class="inv-lead">Co se děje v areálu YEZEDO a sýpce BIQ.</p>
+<div class="inv-hero-actions">
+<a class="button yz-light" href="obcane.html">Co to přinese Kosticím<span aria-hidden="true">↗</span></a>
+</div>
 </div>
 </section>
+<!--/SUBHERO-->
 <section class="section news-section" aria-label="Události od října do června 2026">
 <ol class="news-events">
 <li class="news-event">

@@ -193,7 +193,28 @@ def patch_index():
     p.write_text(t, encoding='utf-8')
 
 
+def patch_nabidka():
+    p = WEB / 'nabidka-hal.html'
+    t = p.read_text(encoding='utf-8')
+    if '<!--HMAP2-->' not in t:
+        return
+    block = f'''<!--HMAP2-->
+<section class="inv-chapter inv-sage hall-where" id="mapa">
+<div class="container">
+<p class="inv-num">Haly na mapě</p>
+<h2>VYBERTE SI HALU.</h2>
+<p class="lead inv-narrow">Šest hal o celkové zastavěné ploše 10 176 m², od 648 do 4 488 m². Klikněte na halu a otevře se její detail s parametry, výkresy a polohou v areálu.</p>
+{plan_map()}
+<p class="fine">Návrhová situace: Zásady rozvoje Smartzóny YEZEDO Kostice, 07/2026.</p>
+</div>
+</section>
+<!--/HMAP2-->'''
+    t = re.sub(r'<!--HMAP2-->.*?<!--/HMAP2-->', lambda m: block, t, flags=re.S)
+    p.write_text(t, encoding='utf-8')
+
+
 patch_index()
+patch_nabidka()
 head, foot = shell()
 for i, h in enumerate(HALLS):
     hall_page(i, h, head, foot)
