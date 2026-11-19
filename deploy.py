@@ -42,6 +42,20 @@ def ensure_dir(ftp, made, rel):
             made.add(d)
 
 
+def credentials():
+    """Jméno a heslo k FTP: z proměnných prostředí, jinak z klíčenky macOS (položka pro www.yezedokostice.cz).
+    Uložení do klíčenky (heslo se zadá skrytě):  security add-internet-password -s www.yezedokostice.cz -r ftp -a JMENO -w"""
+    if os.environ.get('YEZEDO_FTP_USER') and os.environ.get('YEZEDO_FTP_PASS'):
+        return os.environ['YEZEDO_FTP_USER'], os.environ['YEZEDO_FTP_PASS']
+    import re, subprocess
+    attrs = subprocess.run(['security', 'find-internet-password', '-s', HOST], capture_output=True, text=True)
+    user = re.search(r'"acct"<blob>="([^"]*)"', attrs.stdout)
+    pw = subprocess.run(['security', 'find-internet-password', '-s', HOST, '-w'], capture_output=True, text=True)
+    if not user or pw.returncode:
+        sys.exit('Chybí údaje k FTP: nastav YEZEDO_FTP_USER/YEZEDO_FTP_PASS nebo je ulož do klíčenky (viz credentials()).')
+    return user.group(1), pw.stdout.rstrip('\n')
+
+
 def main():
     args = sys.argv[1:]
     skip = set(args[i + 1] for i, a in enumerate(args) if a == '--skip')
@@ -56,7 +70,7 @@ def main():
     if not upload and not delete:
         return
     ftp = ftplib.FTP(HOST, timeout=60)
-    ftp.login(os.environ['YEZEDO_FTP_USER'], os.environ['YEZEDO_FTP_PASS'])
+    ftp.login(*credentials())
     global REMOTE
     REMOTE = ftp.pwd().rstrip('/') + '/' + REMOTE
     made = set()
