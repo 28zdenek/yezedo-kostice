@@ -176,3 +176,55 @@
   const input = form.querySelector(`[name=role][value="${map[role]}"]`);
   if (input) { input.checked = true; input.dispatchEvent(new Event('change')); }
 })();
+
+// Hlavní stránka pro investory: odkrývání, ukazatel kapitol, plovoucí tlačítko, formulář
+(() => {
+  const root = document.querySelector('main.inv');
+  if (!root) return;
+  document.documentElement.classList.add('js');
+  const io = 'IntersectionObserver' in window;
+  const reveals = root.querySelectorAll('.inv-reveal');
+  if (io) {
+    const ro = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); } }), {rootMargin: '0px 0px -8% 0px'});
+    reveals.forEach(el => ro.observe(el));
+  } else reveals.forEach(el => el.classList.add('in'));
+
+  const nav = document.querySelector('.inv-chapters');
+  const sticky = document.querySelector('.inv-sticky');
+  const hero = document.querySelector('.inv-hero');
+  const contact = document.querySelector('#napiste-nam');
+  const links = nav ? [...nav.querySelectorAll('a')] : [];
+  const chapters = links.map(a => document.querySelector(a.getAttribute('href')));
+  const update = () => {
+    const y = window.scrollY, h = window.innerHeight;
+    const pastHero = hero.getBoundingClientRect().bottom < h * 0.4;
+    const atContact = contact.getBoundingClientRect().top < h * 0.8;
+    nav && nav.classList.toggle('show', pastHero);
+    sticky && sticky.classList.toggle('show', pastHero && !atContact);
+    let current = -1;
+    chapters.forEach((c, i) => { if (c && c.getBoundingClientRect().top < h * 0.45) current = i; });
+    links.forEach((a, i) => a.classList.toggle('active', i === current));
+    if (current >= 0 && nav) nav.classList.toggle('on-dark', chapters[current].classList.contains('inv-dark'));
+  };
+  window.addEventListener('scroll', update, {passive: true});
+  window.addEventListener('resize', update);
+  update();
+
+  const form = document.querySelector('#investor-form');
+  if (!form) return;
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const status = document.querySelector('#investor-stav');
+    const missing = [...form.querySelectorAll('[required]')].find(f => !f.value.trim() || (f.type === 'email' && !f.checkValidity()));
+    if (missing) { status.textContent = 'Vyplňte prosím jméno, platný e-mail a váš záměr.'; missing.focus(); return; }
+    const v = n => form[n].value.trim();
+    const lines = [`Zájem: ${form.zajem.value}`, `Jméno: ${v('jmeno')}`];
+    if (v('firma')) lines.push(`Společnost: ${v('firma')}`);
+    lines.push(`E-mail: ${v('email')}`);
+    if (v('telefon')) lines.push(`Telefon: ${v('telefon')}`);
+    lines.push('', v('zprava'));
+    const subject = `YEZEDO – ${form.zajem.value}${v('firma') ? ' – ' + v('firma') : ''}`;
+    location.href = `mailto:starosta@kostice.cz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+    status.textContent = 'Otevírá se váš e-mailový program. Pokud se neotevřel, napište na starosta@kostice.cz.';
+  });
+})();

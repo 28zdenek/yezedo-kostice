@@ -1,27 +1,44 @@
-"""Nová verze webu (podklad od Atelieru Dohnalovi, upraveno 11/2026).
+"""Náhled pro investory na https://yezedo.zdenekmatuska.cz/ (GitHub Pages, noindex).
 
 Zdroj: web/ (ruční HTML, styles.css, app.js). Upravuje se přímo tam.
-    python3 build_web.py      -> docs/novy/  náhled na https://yezedo.zdenekmatuska.cz/novy/ (noindex)
+    python3 build_web.py      -> docs/  (pak git push = nasazení náhledu)
 
-Ostrý web zatím běží ze staré verze (build.py -> dist/). Před přepnutím na novou verzi viz README.
+Od 19. 11. 2026 je náhled v kořeni domény (dřív /novy/). Staré adresy /novy/… přesměrují na kořen.
+Ostrý web www.yezedokostice.cz se skládá jinak: build_prod.py z balíčku ateliéru (atelier/).
 """
 import pathlib, re, shutil
 
 SRC = pathlib.Path('web')
-OUT = pathlib.Path('docs/novy')
+OUT = pathlib.Path('docs')
+KEEP = {'CNAME', 'robots.txt', '.nojekyll'}
 NOINDEX = '<meta name="robots" content="noindex, nofollow">'
 
-if OUT.exists():
-    shutil.rmtree(OUT)
-shutil.copytree(SRC, OUT, ignore=shutil.ignore_patterns('.DS_Store', 'Thumbs.db', '* 2.*', 'robots.txt', 'sitemap.xml'))
+OUT.mkdir(exist_ok=True)
+for entry in OUT.iterdir():
+    if entry.name in KEEP:
+        continue
+    shutil.rmtree(entry) if entry.is_dir() else entry.unlink()
+shutil.copytree(SRC, OUT, dirs_exist_ok=True,
+                ignore=shutil.ignore_patterns('.DS_Store', 'Thumbs.db', '* 2.*', '* 2', 'robots.txt', 'sitemap.xml'))
 
+pages = sorted(p.name for p in SRC.glob('*.html'))
 for page in OUT.rglob('*.html'):
     html = page.read_text(encoding='utf-8')
     if NOINDEX not in html:
         html = html.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n' + NOINDEX, 1)
     page.write_text(html, encoding='utf-8')
 
-# hlídání odkazů: každý místní odkaz musí vést na existující soubor
+# staré odkazy na /novy/… -> kořen
+novy = OUT / 'novy'
+novy.mkdir(exist_ok=True)
+for name in pages:
+    target = '../' if name == 'index.html' else f'../{name}'
+    (novy / name).write_text(f'''<!doctype html>
+<html lang="cs"><head><meta charset="utf-8">{NOINDEX}<meta http-equiv="refresh" content="0;url={target}">
+<link rel="canonical" href="https://yezedo.zdenekmatuska.cz/{'' if name == 'index.html' else name}">
+<title>YEZEDO – přesměrování</title></head><body><p><a href="{target}">Pokračovat na web YEZEDO</a></p></body></html>
+''', encoding='utf-8')
+
 missing = set()
 for page in OUT.rglob('*.html'):
     for ref in re.findall(r'(?:href|src)="([^"#?]+)', page.read_text(encoding='utf-8')):
@@ -30,4 +47,4 @@ for page in OUT.rglob('*.html'):
         if not (page.parent / ref).exists():
             missing.add(f'{page.relative_to(OUT)} -> {ref}')
 print('\n'.join(sorted(missing)) or 'odkazy v pořádku')
-print(f'hotovo: {OUT}')
+print(f'hotovo: {OUT}/')
