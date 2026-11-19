@@ -2556,3 +2556,10 @@ figcaption p {
   .inv-people figcaption b{font-size:19px}
   .inv-people figcaption{font-size:12.5px}
 }
+/* videa na hlavní stránce */
+.inv-video{margin:56px 0 0}
+.inv-video .video{margin:0}
+.inv-video .video-note{margin-top:10px}
+.inv-video-people{margin-top:80px;padding-top:40px;border-top:1px solid #22272133}
+.inv-video-people h3{font-size:clamp(30px,3vw,44px);margin-bottom:8px}
+.inv-video-people>p{font-size:18px;margin-bottom:24px}
