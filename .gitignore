@@ -5,3 +5,7 @@ dist/
 .deploy-manifest.json
 server-backup-*/
 .site-password
+
+# kopie vytvořené iCloudem
+* 2.*
+* 2
