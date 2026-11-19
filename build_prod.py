@@ -15,10 +15,18 @@ import pathlib, re, shutil
 # Zámek heslem (login.aspx + pravidlo ve web.config, heslo v .site-password, změna přes set_password.py).
 # Zdeněk 19. 11. 2026: přihlášení zatím nechat. Zveřejnění = LOCKED = False, sestavit a nahrát.
 LOCKED = True
+# Stránka Pro občany: Zdeněk 19. 11. 2026 – na ostrý web zatím ne, jen náhled yezedo.zdenekmatuska.cz/novy/
+OBCANE = False
 
 SRC = pathlib.Path('atelier')
 OUT = pathlib.Path('dist')
-rd = lambda p: pathlib.Path(p).read_text(encoding='utf-8')
+# čtení a zápis beze změny konců řádků (ateliér posílá CRLF z Windows) – soubory mají zůstat 1:1
+rd = lambda p: open(p, encoding='utf-8', newline='').read()
+
+
+def wr(p, s, encoding='utf-8'):
+    with open(p, 'w', encoding=encoding, newline='') as fh:
+        fh.write(s)
 
 if OUT.exists():
     shutil.rmtree(OUT)
@@ -33,32 +41,33 @@ def add_nav(html):
     return html.replace('<a href="kontakt.html">Kontakt</a>', NAV_ITEM + '<a href="kontakt.html">Kontakt</a>')
 
 
-# --- stránka Pro občany ---
 shell = rd(SRC / 'kontakt.html')
-main = re.search(r'<main id="obsah".*?</main>', rd('web/obcane.html'), re.S).group(0)
-# neodpovězené otázky („Doplní obec“) na ostrý web nepatří
-main = re.sub(r'<article class="yz-card yz-todo">.*?</article>\n?', '', main, flags=re.S)
-main = re.sub(r'<details>\s*<summary>[^<]*</summary>\s*<p class="yz-todo-line">.*?</details>\n?', '', main, flags=re.S)
-assert 'yz-todo' not in main, 'zůstal blok Doplní obec'
-main = main.replace('kontakt.html?role=obcan#poptavka', 'kontakt.html').replace('href="pribeh.html"', 'href="index.html#pribeh"')
-page = re.sub(r'<main id="obsah".*?</main>', lambda m: main, shell, flags=re.S)
-title = 'Pro občany — YEZEDO Kostice'
-desc = 'Co bude ve starém JZD v Kosticích: park s vyhlídkou, průchozí areál, kavárna v sýpce a haly pro menší firmy. Odpovědi na otázky občanů.'
-url = 'https://www.yezedokostice.cz/obcane.html'
-page = re.sub(r'<title>.*?</title>', f'<title>{title}</title>', page)
-for prop, val in (('og:title', title), ('og:description', desc), ('og:url', url),
-                  ('og:image', 'https://www.yezedokostice.cz/assets/images/existing.webp')):
-    page = re.sub(rf'(<meta property="{prop}" content=")[^"]*', lambda m: m.group(1) + val, page)
-page = re.sub(r'(<meta name="description" content=")[^"]*', lambda m: m.group(1) + desc, page)
-page = re.sub(r'(<link rel="canonical" href=")[^"]*', lambda m: m.group(1) + url, page)
-page = page.replace('data-page="kontakt.html"', 'data-page="obcane.html"')
-page = page.replace(' aria-current="page"', '')
-page = re.sub(r'(<link rel="stylesheet" href="styles\.css[^"]*">)', r'\1\n<link rel="stylesheet" href="obcane.css?v=1">', page, count=1)
-(OUT / 'obcane.html').write_text(page, encoding='utf-8')
+if OBCANE:
+    # --- stránka Pro občany ---
+    main = re.search(r'<main id="obsah".*?</main>', rd('web/obcane.html'), re.S).group(0)
+    # neodpovězené otázky („Doplní obec“) na ostrý web nepatří
+    main = re.sub(r'<article class="yz-card yz-todo">.*?</article>\n?', '', main, flags=re.S)
+    main = re.sub(r'<details>\s*<summary>[^<]*</summary>\s*<p class="yz-todo-line">.*?</details>\n?', '', main, flags=re.S)
+    assert 'yz-todo' not in main, 'zůstal blok Doplní obec'
+    main = main.replace('kontakt.html?role=obcan#poptavka', 'kontakt.html').replace('href="pribeh.html"', 'href="index.html#pribeh"')
+    page = re.sub(r'<main id="obsah".*?</main>', lambda m: main, shell, flags=re.S)
+    title = 'Pro občany — YEZEDO Kostice'
+    desc = 'Co bude ve starém JZD v Kosticích: park s vyhlídkou, průchozí areál, kavárna v sýpce a haly pro menší firmy. Odpovědi na otázky občanů.'
+    url = 'https://www.yezedokostice.cz/obcane.html'
+    page = re.sub(r'<title>.*?</title>', f'<title>{title}</title>', page)
+    for prop, val in (('og:title', title), ('og:description', desc), ('og:url', url),
+                      ('og:image', 'https://www.yezedokostice.cz/assets/images/existing.webp')):
+        page = re.sub(rf'(<meta property="{prop}" content=")[^"]*', lambda m: m.group(1) + val, page)
+    page = re.sub(r'(<meta name="description" content=")[^"]*', lambda m: m.group(1) + desc, page)
+    page = re.sub(r'(<link rel="canonical" href=")[^"]*', lambda m: m.group(1) + url, page)
+    page = page.replace('data-page="kontakt.html"', 'data-page="obcane.html"')
+    page = page.replace(' aria-current="page"', '')
+    page = re.sub(r'(<link rel="stylesheet" href="styles\.css[^"]*">)', r'\1\n<link rel="stylesheet" href="obcane.css?v=1">', page, count=1)
+    wr(OUT / 'obcane.html', page, 'utf-8')
 
-css = rd('web/styles.css')
-(OUT / 'obcane.css').write_text('/* Stránka Pro občany – doplněk k styles.css ateliéru */\n'
-                                + css[css.index('/* ===== Úvod pro investory, firmy a občany'):], encoding='utf-8')
+    css = rd('web/styles.css')
+    (OUT / 'obcane.css').write_text('/* Stránka Pro občany – doplněk k styles.css ateliéru */\n'
+                                    + css[css.index('/* ===== Úvod pro investory, firmy a občany'):], encoding='utf-8')
 
 # --- 404 ve stylu ateliéru ---
 p404 = re.sub(r'<main id="obsah".*?</main>', '''<main id="obsah" tabindex="-1">
@@ -75,21 +84,22 @@ p404 = p404.replace('<meta charset="utf-8">', '<meta charset="utf-8">\n<meta nam
 p404 = p404.replace(' aria-current="page"', '')
 # 404 se zobrazuje i na hlubších adresách, odkazy musí být od kořene webu
 p404 = re.sub(r'(href|src)="(?!https?:|mailto:|tel:|/|#)', r'\1="/', p404)
-(OUT / '404.html').write_text(p404, encoding='utf-8')
+wr(OUT / '404.html', p404, 'utf-8')
 
 # --- úpravy všech stránek ---
 for f in OUT.rglob('*.html'):
     t = rd(f)
     t = CREDIT.sub('', t)
-    t = add_nav(t)
+    if OBCANE:
+        t = add_nav(t)
     if f.name == 'obcane.html':
         t = t.replace('<a href="obcane.html">', '<a href="obcane.html" aria-current="page">')
-    f.write_text(t, encoding='utf-8')
+    wr(f, t, 'utf-8')
 
 sm = rd(OUT / 'sitemap.xml')
-if 'obcane.html' not in sm:
+if OBCANE and 'obcane.html' not in sm:
     sm = sm.replace('</urlset>', '<url><loc>https://www.yezedokostice.cz/obcane.html</loc></url></urlset>')
-    (OUT / 'sitemap.xml').write_text(sm, encoding='utf-8')
+    wr(OUT / 'sitemap.xml', sm, 'utf-8')
 
 LOGIN_ASPX = '''<%@ Page Language="C#" EnableViewState="false" EnableSessionState="false" %>
 <%@ Import Namespace="System.Configuration" %>
@@ -172,13 +182,13 @@ if LOCKED:
     for key in ('salt', 'hash', 'token'):
         config = config.replace('@@LOGIN_%s@@' % key.upper(), auth[key])
     # s BOM, aby ASP.NET četl češtinu jako UTF-8
-    (OUT / 'login.aspx').write_text(LOGIN_ASPX, encoding='utf-8-sig')
-    (OUT / 'robots.txt').write_text('User-agent: *\nDisallow: /\n', encoding='utf-8')
+    wr(OUT / 'login.aspx', LOGIN_ASPX, 'utf-8-sig')
+    wr(OUT / 'robots.txt', 'User-agent: *\nDisallow: /\n', 'utf-8')
 else:
     config = re.sub(r'\s*<appSettings>.*?</appSettings>', '', config, flags=re.S)
     config = re.sub(r'\s*<!--HESLO-->.*?<!--/HESLO-->', '', config, flags=re.S)
 assert not re.search(r'@@LOGIN_[A-Z]+@@', config), 'nedosazené heslo'
-(OUT / 'web.config').write_text(config, encoding='utf-8')
+wr(OUT / 'web.config', config, 'utf-8')
 
 # --- kontrola ---
 problems = []
