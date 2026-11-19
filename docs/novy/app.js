@@ -166,3 +166,13 @@
     status.textContent = 'Otevírá se váš e-mailový program. Pokud se neotevřel, napište na starosta@kostice.cz.';
   });
 })();
+
+// Formulář: předvyplnění role z odkazu (?role=investor|obcan|firma)
+(() => {
+  const form = document.querySelector('#poptavka-form');
+  const role = new URLSearchParams(location.search).get('role');
+  const map = {investor: 'Investor / partner', obcan: 'Občan', firma: 'Firma / živnostník'};
+  if (!form || !map[role]) return;
+  const input = form.querySelector(`[name=role][value="${map[role]}"]`);
+  if (input) { input.checked = true; input.dispatchEvent(new Event('change')); }
+})();

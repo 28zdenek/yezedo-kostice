@@ -2315,3 +2315,58 @@ figcaption p {
   .yz-halls th:last-child,.yz-halls td:last-child{display:none}
   .yz-halls th,.yz-halls td{padding-right:8px}
 }
+/* ===== Úvod pro investory v2 + stránka Pro občany ===== */
+.yz-ready-light>div{border-top-color:var(--line)}
+.yz-ready-light dt{color:var(--muted)}
+.yz-feature{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
+.yz-feature img{width:100%;aspect-ratio:1.5;object-fit:cover}
+.yz-feature p:not(.eyebrow){font-size:18px;margin-bottom:28px}
+.yz-contact{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:20px 40px;margin-top:56px;padding-top:30px;border-top:1px solid #626d5588}
+.yz-contact p{margin:0;font-size:18px}
+.yz-contact a{color:var(--sage)}
+.yz-contact .yz-actions{margin-top:0}
+.yz-citizens{position:relative;display:block;background:var(--sage);padding:44px max(var(--gutter),calc((100vw - var(--content))/2)) 48px;text-decoration:none}
+.yz-citizens .eyebrow{display:block;margin-bottom:10px}
+.yz-citizens strong{display:block;font:700 clamp(28px,3vw,44px)/1.05 BarlowCondensed,'Arial Narrow',sans-serif;padding-right:60px}
+.yz-citizens .yz-arrow{right:max(var(--gutter),calc((100vw - var(--content))/2));bottom:48px;font-size:40px}
+.yz-citizens:hover strong{text-decoration:underline;text-underline-offset:6px}
+/* Pro občany */
+.yz-town{position:relative;min-height:600px;height:calc(100svh - var(--header));max-height:960px;overflow:hidden;background:var(--ink);color:var(--paper)}
+.yz-town-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 60%}
+.yz-town:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#161b15f0 0%,#161b15aa 40%,#161b1522 75%,#161b1566 100%);pointer-events:none}
+.yz-town-inner{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:0 var(--gutter) clamp(40px,7vh,72px);max-width:calc(var(--content) + var(--gutter)*2);margin:0 auto}
+.yz-town-logos{display:flex;align-items:center;gap:22px;margin-bottom:auto;padding-top:clamp(28px,6vh,56px)}
+.yz-town-logos img{height:clamp(70px,9vw,104px);width:auto}
+.yz-town-logos span{font-size:28px;opacity:.7}
+.yz-town .eyebrow{color:var(--sage);margin-bottom:16px}
+.yz-town h1{font-size:clamp(52px,7.4vw,118px);margin-bottom:22px}
+.yz-short{list-style:none;padding:0;margin:44px 0 0;display:grid;grid-template-columns:repeat(4,1fr);gap:36px}
+.yz-short li{padding-top:20px;border-top:2px solid var(--ink)}
+.yz-short b{display:block;font:700 15px BarlowCondensed;letter-spacing:.1em;color:var(--muted);margin-bottom:12px}
+.yz-short p{font-size:19px;line-height:1.5;margin:0}
+.yz-short strong{display:block;font:700 26px/1.1 BarlowCondensed,'Arial Narrow',sans-serif;margin-bottom:8px}
+.yz-pics{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:44px}
+.yz-pics img{width:100%;aspect-ratio:1.45;object-fit:cover}
+.yz-pics figcaption h3{font-size:26px;margin:18px 0 8px}
+.yz-pics figcaption p{font-size:17px;line-height:1.55;margin:0}
+.yz-note{margin:26px 0 0}
+.yz-grid-plain .yz-card{background:#fff8}
+.yz-faq{max-width:900px;margin-top:40px;border-top:1px solid var(--ink)}
+.yz-faq details{border-bottom:1px solid var(--line)}
+.yz-faq summary{cursor:pointer;list-style:none;position:relative;padding:22px 50px 22px 0;font:700 clamp(21px,1.9vw,26px)/1.2 BarlowCondensed,'Arial Narrow',sans-serif}
+.yz-faq summary::-webkit-details-marker{display:none}
+.yz-faq summary:after{content:'+';position:absolute;right:4px;top:16px;font:400 32px Barlow}
+.yz-faq details[open] summary:after{content:'−'}
+.yz-faq details>p{font-size:18px;line-height:1.6;margin:0 0 24px;max-width:780px}
+@media(max-width:980px){
+  .yz-short{grid-template-columns:1fr 1fr}
+  .yz-pics,.yz-feature{grid-template-columns:1fr}
+  .yz-feature{gap:30px}
+}
+@media(max-width:760px){
+  .yz-town{height:auto;min-height:calc(100svh - var(--header));max-height:none}
+  .yz-town h1{font-size:clamp(44px,12.5vw,66px)}
+  .yz-town-inner{min-height:calc(100svh - var(--header))}
+  .yz-short{grid-template-columns:1fr;gap:26px}
+  .yz-contact{flex-direction:column;align-items:stretch}
+}
