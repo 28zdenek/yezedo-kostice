@@ -17,8 +17,8 @@
 <link rel="icon" href="assets/images/mark.png">
 <link rel="preload" href="assets/fonts/BarlowCondensed-Bold.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/images/square-night.webp" imagesrcset="assets/images/square-night-small.webp 800w, assets/images/square-night.webp 2000w" imagesizes="100vw">
-<link rel="stylesheet" href="styles.css?v=22">
-<script src="app.js?v=17" defer>
+<link rel="stylesheet" href="styles.css?v=23">
+<script src="app.js?v=18" defer>
 </script>
 </head>
 <body data-page="index.html">
@@ -133,10 +133,41 @@
 </div>
 <p class="video-note"><a href="https://youtu.be/sWQShSMKCxE" target="_blank" rel="noopener">Přehrát video na YouTube</a></p>
 </div>
-<figure class="inv-plan inv-reveal">
-<img src="assets/images/plan.webp" srcset="assets/images/plan-small.webp 800w, assets/images/plan.webp 1662w" sizes="(max-width: 1240px) 100vw, 1240px" alt="Návrhová situace smartzóny Yezedo s očíslovanými částmi areálu" width="1662" height="852" loading="lazy" decoding="async">
-<figcaption>Návrhová situace: Zásady rozvoje Smartzóny YEZEDO Kostice, 07/2026.</figcaption>
-</figure>
+<!--HMAP-->
+<div class="inv-plan inv-reveal">
+<div class="hmap">
+<img src="assets/images/plan.webp" srcset="assets/images/plan-small.webp 800w, assets/images/plan.webp 1662w" sizes="(max-width: 1240px) 100vw, 1240px" alt="Návrhová situace smartzóny Yezedo" width="1662" height="852" loading="lazy" decoding="async">
+<svg viewBox="0 0 1662 852" role="group" aria-label="Haly na situaci areálu">
+<a href="hala-so03.html" target="_blank" rel="noopener" class="hmap-hall" data-hall="SO03" aria-label="Hala SO03, 1 296 m², otevře se v nové záložce">
+<rect x="243" y="320" width="171" height="86" rx="3"/>
+<g class="hmap-tag" transform="translate(293 346)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO03</text></g>
+</a>
+<a href="hala-so04.html" target="_blank" rel="noopener" class="hmap-hall" data-hall="SO04" aria-label="Hala SO04, 1 584 m², otevře se v nové záložce">
+<rect x="473" y="322" width="212" height="82" rx="3"/>
+<g class="hmap-tag" transform="translate(523 348)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO04</text></g>
+</a>
+<a href="hala-so05.html" target="_blank" rel="noopener" class="hmap-hall" data-hall="SO05" aria-label="Hala SO05, 648 m², otevře se v nové záložce">
+<rect x="622" y="423" width="64" height="131" rx="3"/>
+<g class="hmap-tag" transform="translate(654 449)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO05</text></g>
+</a>
+<a href="hala-so06.html" target="_blank" rel="noopener" class="hmap-hall" data-hall="SO06" aria-label="Hala SO06, 4 488 m², otevře se v nové záložce">
+<rect x="716" y="390" width="226" height="232" rx="3"/>
+<g class="hmap-tag" transform="translate(766 416)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO06</text></g>
+</a>
+<a href="hala-so07.html" target="_blank" rel="noopener" class="hmap-hall" data-hall="SO07" aria-label="Hala SO07, 1 188 m², otevře se v nové záložce">
+<rect x="263" y="200" width="197" height="63" rx="3"/>
+<g class="hmap-tag" transform="translate(313 226)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO07</text></g>
+</a>
+<a href="hala-so09.html" target="_blank" rel="noopener" class="hmap-hall" data-hall="SO09" aria-label="Hala SO09, 972 m², otevře se v nové záložce">
+<rect x="258" y="570" width="178" height="66" rx="3"/>
+<g class="hmap-tag" transform="translate(308 596)"><rect x="-44" y="-20" width="88" height="40" rx="2"/><text y="8">SO09</text></g>
+</a>
+</svg>
+</div>
+<p class="hmap-hint"><span aria-hidden="true">↗</span> Klikněte na halu, otevře se její detail v nové záložce.</p>
+<p class="fine">Návrhová situace: Zásady rozvoje Smartzóny YEZEDO Kostice, 07/2026.</p>
+</div>
+<!--/HMAP-->
 <ol class="inv-legend">
 <li class="inv-reveal"><b>1</b><div><h3>Sýpka BIQ</h3><p>Sdílené dílny, kavárna, coworking a setkávání.</p></div></li>
 <li class="inv-reveal"><b>2</b><div><h3>Výroba a služby</h3><p>Haly v měřítku původního zemědělského družstva.</p></div></li>
@@ -160,12 +191,12 @@
 <caption>Orientační zastavěná plocha, nikoli užitná. Návrh konstrukčního řešení: RIVESTA Consult, s.r.o.</caption>
 <thead><tr><th scope="col">Hala</th><th scope="col">Rozměry</th><th scope="col">Plocha</th><th scope="col">Sekce</th><th scope="col"><span class="yz-sr">Detail</span></th></tr></thead>
 <tbody>
-<tr><th scope="row"><a href="nabidka-hal.html#SO03">SO03</a></th><td>54 × 24 m</td><td>1 296 m²</td><td>5</td><td><a href="nabidka-hal.html#SO03">Detail ↗</a></td></tr>
-<tr><th scope="row"><a href="nabidka-hal.html#SO04">SO04</a></th><td>66 × 24 m</td><td>1 584 m²</td><td>5</td><td><a href="nabidka-hal.html#SO04">Detail ↗</a></td></tr>
-<tr><th scope="row"><a href="nabidka-hal.html#SO05">SO05</a></th><td>36 × 18 m</td><td>648 m²</td><td>3</td><td><a href="nabidka-hal.html#SO05">Detail ↗</a></td></tr>
-<tr><th scope="row"><a href="nabidka-hal.html#SO06">SO06</a></th><td>68 × 66 m</td><td>4 488 m²</td><td>podle záměru</td><td><a href="nabidka-hal.html#SO06">Detail ↗</a></td></tr>
-<tr><th scope="row"><a href="nabidka-hal.html#SO07">SO07</a></th><td>66 × 18 m</td><td>1 188 m²</td><td>2</td><td><a href="nabidka-hal.html#SO07">Detail ↗</a></td></tr>
-<tr><th scope="row"><a href="nabidka-hal.html#SO09">SO09</a></th><td>54 × 18 m</td><td>972 m²</td><td>5</td><td><a href="nabidka-hal.html#SO09">Detail ↗</a></td></tr>
+<tr><th scope="row"><a href="hala-so03.html">SO03</a></th><td>54 × 24 m</td><td>1 296 m²</td><td>5</td><td><a href="hala-so03.html">Detail ↗</a></td></tr>
+<tr><th scope="row"><a href="hala-so04.html">SO04</a></th><td>66 × 24 m</td><td>1 584 m²</td><td>5</td><td><a href="hala-so04.html">Detail ↗</a></td></tr>
+<tr><th scope="row"><a href="hala-so05.html">SO05</a></th><td>36 × 18 m</td><td>648 m²</td><td>3</td><td><a href="hala-so05.html">Detail ↗</a></td></tr>
+<tr><th scope="row"><a href="hala-so06.html">SO06</a></th><td>68 × 66 m</td><td>4 488 m²</td><td>podle záměru</td><td><a href="hala-so06.html">Detail ↗</a></td></tr>
+<tr><th scope="row"><a href="hala-so07.html">SO07</a></th><td>66 × 18 m</td><td>1 188 m²</td><td>2</td><td><a href="hala-so07.html">Detail ↗</a></td></tr>
+<tr><th scope="row"><a href="hala-so09.html">SO09</a></th><td>54 × 18 m</td><td>972 m²</td><td>5</td><td><a href="hala-so09.html">Detail ↗</a></td></tr>
 </tbody>
 </table>
 </div>

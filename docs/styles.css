@@ -2563,3 +2563,58 @@ figcaption p {
 .inv-video-people{margin-top:80px;padding-top:40px;border-top:1px solid #22272133}
 .inv-video-people h3{font-size:clamp(30px,3vw,44px);margin-bottom:8px}
 .inv-video-people>p{font-size:18px;margin-bottom:24px}
+
+/* ===== Klikací mapa hal + stránky hal ===== */
+.hmap{position:relative;background:#eceae1}
+.hmap img{display:block;width:100%;height:auto}
+.hmap svg{position:absolute;inset:0;width:100%;height:100%}
+.hmap-hall>rect{fill:#c6d3a900;stroke:#222721;stroke-width:3;stroke-dasharray:10 6;transition:fill .2s,stroke-width .2s}
+.hmap-tag rect{fill:#222721}
+.hmap-tag text{fill:#f3f1ea;font:700 26px Barlow,Arial,sans-serif;text-anchor:middle;letter-spacing:1px}
+.hmap-hall:hover>rect,.hmap-hall:focus-visible>rect,.hmap-hall.is-active>rect{fill:#c6d3a9b3;stroke-dasharray:none;stroke-width:5}
+.hmap-hall:hover .hmap-tag rect,.hmap-hall:focus-visible .hmap-tag rect,.hmap-hall.is-active .hmap-tag rect{fill:#bd652f}
+.hmap-hall:focus{outline:none}
+.hmap-hint{display:flex;gap:10px;align-items:center;font-weight:700;font-size:16px;margin:16px 0 4px}
+.inv-plan .fine{margin-top:4px}
+.hmap-small .hmap-hall:not(.is-active)>rect{stroke-width:2}
+@media(max-width:760px){.hmap-tag text{font-size:34px}.hmap-tag rect{transform:scale(1.25)}}
+.hall-hero{background:var(--ink);color:var(--paper);padding:clamp(48px,6vw,90px) 0 clamp(40px,5vw,70px)}
+.hall-crumbs{font-size:14px;margin-bottom:28px;color:#f3f1eaa6}
+.hall-crumbs a{color:var(--sage)}
+.hall-hero h1{font-size:clamp(64px,9vw,150px);line-height:.9;margin-bottom:40px}
+.hall-key{display:grid;grid-template-columns:repeat(4,1fr);margin:0;border-top:1px solid #f3f1ea33}
+.hall-key>div{padding:20px 24px 0 0}
+.hall-key dt{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--sage)}
+.hall-key dd{margin:6px 0 0;font:700 clamp(26px,2.6vw,40px)/1.05 BarlowCondensed,'Arial Narrow',sans-serif}
+.hall-visual{margin:0;background:var(--ink)}
+.hall-visual img{width:100%;max-height:760px;object-fit:cover;display:block}
+.hall-visual.is-drawing{background:#fff;padding:clamp(20px,4vw,60px) 0}
+.hall-visual.is-drawing img{max-width:1240px;margin:0 auto;object-fit:contain;max-height:none}
+.hall-cols{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(40px,6vw,96px);align-items:start}
+.hall-cols>*{min-width:0}
+.hall-cols h2{font-size:clamp(34px,3.6vw,56px);line-height:1.02;text-transform:uppercase}
+.hall-feats{list-style:none;padding:0;margin:40px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:26px 36px}
+.hall-feats li{border-top:2px solid var(--ink);padding-top:16px;font-size:16.5px}
+.hall-feats b{display:block;font:700 22px/1.15 BarlowCondensed,'Arial Narrow',sans-serif;margin-bottom:6px}
+.hall-params{background:#fff9;border:1px solid var(--line);padding:30px;position:sticky;top:calc(var(--header) + 24px)}
+.hall-params h3{font-size:30px;margin-bottom:12px}
+.hall-params dl{margin:0 0 18px}
+.hall-params dl>div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--line)}
+.hall-params dt{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.hall-params dd{margin:0;font-size:16px}
+.hall-docs{display:grid;gap:10px;margin-top:20px}
+.hall-docs a{display:flex;gap:14px;align-items:center;padding:12px 14px;border:1px solid var(--ink);text-decoration:none;font-weight:700;font-size:15px}
+.hall-docs a:hover{background:var(--ink);color:var(--paper)}
+.hall-docs span{font-size:11px;letter-spacing:.1em;border:1px solid currentColor;padding:2px 6px}
+.hall-where .hmap{margin:36px 0 14px}
+.hall-cta-actions p{margin:22px 0 0;font-size:17px}
+.hall-cta-actions a:not(.button){color:var(--sage)}
+.hall-pager{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;padding:50px 0 70px}
+.hall-pager a{text-decoration:none}
+.hall-pager a:last-child{text-align:right}
+.hall-pager span{display:block;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.hall-pager b{display:block;font:700 44px/1 BarlowCondensed,'Arial Narrow',sans-serif;margin:6px 0 2px}
+.hall-pager small{font-size:15px}
+.hall-pager-all{font-weight:700;border-bottom:2px solid var(--ink);padding-bottom:3px}
+@media(max-width:980px){.hall-cols{grid-template-columns:1fr}.hall-params{position:static}.hall-key{grid-template-columns:1fr 1fr}}
+@media(max-width:760px){.hall-feats{grid-template-columns:1fr}.hall-params dl>div{grid-template-columns:1fr;gap:2px}.hall-pager{grid-template-columns:1fr 1fr}.hall-pager-all{grid-column:1/-1;grid-row:2;justify-self:center}}

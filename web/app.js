@@ -228,3 +228,13 @@
     status.textContent = 'Otevírá se váš e-mailový program. Pokud se neotevřel, napište na starosta@kostice.cz.';
   });
 })();
+
+// Hlavní stránka: předvyplnění formuláře z odkazu ?hala=SO03 (ze stránky haly)
+(() => {
+  const form = document.querySelector('#investor-form');
+  const hala = new URLSearchParams(location.search).get('hala');
+  if (!form || !/^SO0\d$/.test(hala || '')) return;
+  const r = form.querySelector('[name=zajem][value="Výstavba nebo koupě haly"]');
+  if (r) r.checked = true;
+  if (!form.zprava.value) form.zprava.value = `Mám zájem o halu ${hala}. `;
+})();
