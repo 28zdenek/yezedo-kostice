@@ -45,6 +45,9 @@ def ensure_dir(ftp, made, rel):
 def main():
     args = sys.argv[1:]
     skip = set(args[i + 1] for i, a in enumerate(args) if a == '--skip')
+    # soubory, které na serveru zůstávají, i když v dist/ nejsou (staré odkazy) – seznam v .deploy-keep
+    if os.path.exists('.deploy-keep'):
+        skip |= set(l.strip() for l in open('.deploy-keep', encoding='utf-8') if l.strip() and not l.startswith('#'))
     files = {k: v for k, v in local_files().items() if k not in skip}
     old = {} if '--all' in args or not os.path.exists(MANIFEST) else json.load(open(MANIFEST))
     upload = sorted(k for k, v in files.items() if old.get(k) != v)
