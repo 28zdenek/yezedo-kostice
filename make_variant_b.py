@@ -42,7 +42,7 @@ head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" 
 poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
 poloha = poloha.replace('<p class="fine inv-reveal">Dojezdové časy podle mapy Atelieru Dohnalovi.',
     '<p class="vb-people inv-reveal"><b>≈ 270 000</b><span>obyvatel v okresech Břeclav a Hodonín, kde mohou firmy hledat zaměstnance</span></p>\n'
-    '<p class="fine inv-reveal">Dojezdové časy podle mapy Atelieru Dohnalovi. Počet obyvatel: ČSÚ k 31. 12. 2025 (Břeclav 118 749, Hodonín 151 245).', 1)
+    '<p class="fine inv-reveal">Počet obyvatel: ČSÚ k 31. 12. 2025 (Břeclav 118 749, Hodonín 151 245).', 1)
 assert 'vb-people' in poloha
 contact = contact.replace('Ozveme se a domluvíme první jednání, případně prohlídku areálu.',
     'Ozveme se do 2 pracovních dnů a domluvíme první jednání nebo prohlídku areálu na místě.', 1)
