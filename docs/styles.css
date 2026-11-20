@@ -2774,3 +2774,7 @@ figcaption p {
   .inv-hero .inv-hero-actions .button{width:auto;flex:1 1 0;min-width:0;padding-left:12px;padding-right:12px;font-size:14px;gap:6px;white-space:nowrap}
   .inv-hero-facts dd{font-size:26px}
 }
+/* menší nadpis v úvodu, víc fotky */
+.inv-hero h1{font-size:clamp(44px,5.4vw,92px);margin-bottom:22px}
+.inv-hero:after{background:linear-gradient(90deg,#111510d9 0%,#11151080 34%,#11151010 70%),linear-gradient(0deg,#111510e6 0%,#11151000 42%),linear-gradient(180deg,#11151080 0%,#11151000 20%)}
+@media(max-width:760px){.inv-hero h1{font-size:clamp(36px,10vw,54px);margin-bottom:14px}.inv-hero:after{background:linear-gradient(0deg,#111510f5 0%,#111510d9 38%,#11151040 66%,#11151000 100%)}}
