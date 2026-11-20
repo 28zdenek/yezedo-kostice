@@ -249,3 +249,14 @@
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), {rootMargin: '0px 0px -6% 0px'});
   els.forEach(el => { el.classList.add('rv'); io.observe(el); });
 })();
+
+// Tlačítko „Domluvit schůzku“ v menu skryté, dokud jsou vidět tlačítka v úvodní fotce
+(() => {
+  const header = document.querySelector('.header');
+  const heroActions = document.querySelector('.inv-hero .inv-hero-actions, .sub-hero .inv-hero-actions, .ob-hero .inv-hero-actions');
+  if (!header || !heroActions || !('IntersectionObserver' in window)) return;
+  header.classList.add('cta-wait');
+  new IntersectionObserver(([e]) => {
+    header.classList.toggle('cta-wait', e.isIntersecting || e.boundingClientRect.top > 0);
+  }, {rootMargin: `-${header.offsetHeight}px 0px 0px 0px`}).observe(heroActions);
+})();
