@@ -36,7 +36,8 @@ head = head.replace('square-night', 'hero').replace('imagesrcset="assets/images/
 head = head.replace('data-page="index.html"', 'data-page="varianta-b.html"')
 head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" class="nav-cta"')
 
-poloha = poloha.replace('<b>02</b> Poloha', '<b>04</b> Poloha')
+poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
+hodnota = cut(r'<section class="inv-chapter" id="hodnota">.*?</section>').replace('<b>06</b> Přidaná hodnota', '<b>04</b> Přidaná hodnota')
 
 main = f'''
 <p class="vb-switch" aria-label="Porovnání variant"><a href="index.html">Varianta A</a><a href="varianta-b.html" aria-current="page">Varianta B</a></p>
@@ -59,7 +60,7 @@ main = f'''
 <div><dt>Plocha 6 hal</dt><dd>10 176 m²</dd></div>
 <div><dt>Odhad investice do hal</dt><dd>≈ 219 mil. Kč</dd></div>
 <div><dt>Sítě a komunikace</dt><dd>Hotovo</dd></div>
-<div><dt>Stavební povolení</dt><dd>konec 2027</dd></div>
+<div><dt>Zájemci o haly</dt><dd>Už teď</dd></div>
 </dl>
 </section>
 
@@ -67,9 +68,10 @@ main = f'''
 <a href="#dohoda"><b>01</b><span>Nabídka</span></a>
 <a href="#cisla"><b>02</b><span>Investice a čas</span></a>
 <a href="#na-miru"><b>03</b><span>Podoba projektu</span></a>
-<a href="#poloha"><b>04</b><span>Poloha</span></a>
-<a href="#jistota"><b>05</b><span>Jistota a postup</span></a>
-<a href="#napiste-nam"><b>06</b><span>Kontakt</span></a>
+<a href="#hodnota"><b>04</b><span>Přidaná hodnota</span></a>
+<a href="#poloha"><b>05</b><span>Poloha</span></a>
+<a href="#jistota"><b>06</b><span>Jistota a postup</span></a>
+<a href="#napiste-nam"><b>07</b><span>Kontakt</span></a>
 </nav>
 
 <!-- 01 NABÍDKA -->
@@ -95,6 +97,11 @@ main = f'''
 {todo('Forma: vlastnictví hal, právo stavby na pozemcích obce, nebo podíl ve společné firmě. Z čeho plyne výnos: nájem, prodej hal firmám, podíl na výnosu.')}
 </article>
 </div>
+<div class="vb-demand inv-reveal">
+<p class="vb-demand-label">Poptávka už je</p>
+<h3>Haly nebudou stát prázdné.</h3>
+<p>Ještě se nestaví, a obec už má první firmy, které chtějí v halách sídlit. Investor tak od začátku ví, že prostory mají odbyt. Podrobnosti o zájemcích probereme na prvním jednání.</p>
+</div>
 {todo('Kdo bude haly pronajímat a kdo bude provozovat YEZEDO Services.')}
 </div>
 </section>
@@ -110,7 +117,7 @@ main = f'''
 <li class="done inv-reveal"><span class="inv-state">Hotovo 07/2026</span><h3>Studie a konstrukce hal</h3><p>Atelier Dohnalovi, konstrukční řešení RIVESTA Consult.</p></li>
 <li class="next inv-reveal"><span class="inv-state">Konec 2027</span><h3>Stavební povolení</h3><p>Předpokládané vydání pro sýpku a prvních šest hal.</p></li>
 <li class="next inv-reveal"><span class="inv-state">2028</span><h3>Zahájení výstavby</h3><p>První etapa: sýpka a haly SO03–SO09.</p></li>
-<li class="done inv-reveal"><span class="inv-state">Už teď</span><h3>První zájemci o haly</h3><p>Obec už má první firmy, které projevily zájem o prostory v halách.</p>{todo('Kdy mohou být haly v provozu.')}</li>
+<li class="done inv-reveal"><span class="inv-state">Už teď</span><h3>První zájemci o haly</h3><p>Firmy, které chtějí v halách sídlit, se obci ozývají už teď. Investor nezačíná s prázdnými halami.</p>{todo('Kdy mohou být haly v provozu.')}</li>
 </ol>
 <aside class="inv-cost inv-reveal">
 <p class="inv-cost-label">Odhad nákladů šesti hal</p>
@@ -135,13 +142,16 @@ main = f'''
 </div>
 </section>
 
-<!-- 04 POLOHA -->
+<!-- 04 PŘIDANÁ HODNOTA -->
+{hodnota}
+
+<!-- 05 POLOHA -->
 {poloha}
 
-<!-- 05 JISTOTA A POSTUP -->
+<!-- 06 JISTOTA A POSTUP -->
 <section class="inv-chapter" id="jistota">
 <div class="container">
-<p class="inv-num"><b>05</b> Jistota a postup</p>
+<p class="inv-num"><b>06</b> Jistota a postup</p>
 <h2 class="inv-reveal">PROJEKT VEDE OBEC.<br>NA DLOUHO.</h2>
 <div class="inv-split inv-split-top">
 <div>
@@ -156,8 +166,8 @@ main = f'''
 {video}
 </section>
 
-<!-- 06 KONTAKT -->
-{contact.replace('<b>08</b> Kontakt', '<b>06</b> Kontakt')}
+<!-- 07 KONTAKT -->
+{contact.replace('<b>08</b> Kontakt', '<b>07</b> Kontakt')}
 
 <a class="inv-sticky" href="#napiste-nam">Máte zájem? Napište nám <span aria-hidden="true">↗</span></a>
 '''

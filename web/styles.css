@@ -2828,3 +2828,8 @@ figcaption p {
 @media(max-width:760px){.vb-switch{top:calc(var(--header) + 8px);right:10px}}
 .vb-callout{background:var(--ink);color:var(--paper);padding:20px 24px;margin:24px 0;font-size:18px;line-height:1.55;max-width:860px}
 .vb-callout b{display:block;font:700 26px/1.1 BarlowCondensed,'Arial Narrow',sans-serif;text-transform:uppercase;color:var(--sage);margin-bottom:6px}
+.vb-demand{margin:36px 0 8px;background:var(--sage);color:var(--ink);padding:26px 28px;display:grid;grid-template-columns:auto 1fr;column-gap:28px;align-items:start;border-left:6px solid var(--ink)}
+.vb-demand-label{grid-row:1/3;margin:4px 0 0;background:var(--ink);color:var(--paper);font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px;white-space:nowrap}
+.vb-demand h3{margin:0 0 8px;font-size:clamp(26px,2.6vw,36px);text-transform:uppercase}
+.vb-demand p:last-child{margin:0;font-size:17px;line-height:1.55;max-width:760px}
+@media(max-width:760px){.vb-demand{grid-template-columns:1fr;padding:20px}.vb-demand-label{grid-row:auto;justify-self:start;margin-bottom:12px}}
