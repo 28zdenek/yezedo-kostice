@@ -146,11 +146,6 @@ main = f'''
 <div class="inv-split inv-split-top">
 <div>
 <p class="lead inv-reveal">Obec pod vedením starosty Mgr. Libora Balgy vzala budoucnost bývalého zemědělského areálu do vlastních rukou. Architektonickou koncepci garantuje Atelier Dohnalovi.</p>
-<ul class="vb-trust">
-<li class="inv-reveal"><h3>Rozhodnutí zastupitelstva</h3>{todo('Usnesení, kterým zastupitelstvo projekt a hledání investora schválilo.')}</li>
-<li class="inv-reveal"><h3>Podmínky dotace</h3>{todo('Udržitelnost a omezení z dotace MPO na infrastrukturu.')}</li>
-<li class="inv-reveal"><h3>Výběr investora</h3>{todo('Kdo rozhoduje, jak výběr proběhne a do kdy.')}</li>
-</ul>
 <ol class="inv-steps">
 <li class="inv-reveal"><b>01</b><div><h3>Představte se</h3><p>Kdo jste, jaké projekty máte za sebou a co vás na Yezedu zaujalo.</p></div></li>
 <li class="inv-reveal"><b>02</b><div><h3>Projděme areál a podklady</h3><p>Prohlídka na místě, studie, dokumentace a stav infrastruktury.</p></div></li>
