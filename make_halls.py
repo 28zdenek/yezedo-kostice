@@ -64,7 +64,7 @@ def plan_map(active=None, new_tab=False):
 
 
 def shell():
-    src = (WEB / 'index.html').read_text(encoding='utf-8')
+    src = pathlib.Path('templates/index-a.html').read_text(encoding='utf-8')
     head = src[:src.index('<main id="obsah"')]
     foot = src[src.index('</main>') + len('</main>'):]
     head = head.replace('<a href="#napiste-nam" class="nav-cta">', '<a href="index.html#napiste-nam" class="nav-cta">')
@@ -174,8 +174,6 @@ def hall_page(i, h, head, foot):
 
 
 def patch_index():
-    p = WEB / 'index.html'
-    t = p.read_text(encoding='utf-8')
     block = f'''<!--HMAP-->
 <div class="inv-plan inv-reveal">
 {plan_map(new_tab=True)}
@@ -183,14 +181,16 @@ def patch_index():
 <p class="fine">Návrhová situace: Zásady rozvoje Smartzóny YEZEDO Kostice, 07/2026.</p>
 </div>
 <!--/HMAP-->'''
-    if '<!--HMAP-->' in t:
+    # mapa v šabloně (z ní make_variant_b.py skládá hlavní stránku) i v hlavní stránce
+    for p in (pathlib.Path('templates/index-a.html'), WEB / 'index.html'):
+        if not p.exists():
+            continue
+        t = p.read_text(encoding='utf-8')
+        if '<!--HMAP-->' not in t:
+            continue
         t = re.sub(r'<!--HMAP-->.*?<!--/HMAP-->', lambda m: block, t, flags=re.S)
-    else:
-        old = re.search(r'<figure class="inv-plan inv-reveal">.*?</figure>', t, re.S)
-        t = t.replace(old.group(0), block)
-    # tabulka hal -> stránky hal
-    t = re.sub(r'href="nabidka-hal\.html#(SO0\d)"', lambda m: f'href="hala-{m.group(1).lower()}.html"', t)
-    p.write_text(t, encoding='utf-8')
+        t = re.sub(r'href="nabidka-hal\.html#(SO0\d)"', lambda m: f'href="hala-{m.group(1).lower()}.html"', t)
+        p.write_text(t, encoding='utf-8')
 
 
 def patch_nabidka():

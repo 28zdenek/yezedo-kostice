@@ -30,7 +30,7 @@ PAGES = {
 
 
 def sub_hero(page, label, img, w, h, second, eyebrow, h1, lead):
-    first = ('<a class="button yz-light" href="#poptavka">Napsat zprávu<span aria-hidden="true">↓</span></a>'
+    first = ('<a class="button yz-light" href="index.html#napiste-nam">Napsat zprávu<span aria-hidden="true">↗</span></a>'
              if page == 'kontakt.html' else
              '<a class="button yz-light" href="obcane.html">Co to přinese Kosticím<span aria-hidden="true">↗</span></a>'
              if page == 'aktuality.html' else CTA)

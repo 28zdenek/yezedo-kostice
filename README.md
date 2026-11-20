@@ -21,3 +21,12 @@ Statický web na https://yezedo.zdenekmatuska.cz (GitHub Pages ze složky `docs/
 - `python3 build_prod.py` → `dist/`: přidá stránku Pro občany (`obcane.html` + `obcane.css`, obsah z `web/obcane.html`,
   bez bloků „Doplní obec“), odkaz v menu, 404.html, `atelier.web.config` jako web.config, bez odkazu „Správa webu“.
 - Nahrání: `YEZEDO_FTP_USER=… YEZEDO_FTP_PASS=… python3 deploy.py` (viz deploy.py). Starý `build.py prod` už nepoužívat.
+
+## Hlavní stránka náhledu (od 20. 11. 2026)
+
+Hlavní stránka `web/index.html` se generuje skriptem `make_variant_b.py` ze šablony `templates/index-a.html`
+(bývalá varianta A: hlavička, patička, poloha, haly, lidé, kontakt). Needitovat `web/index.html` ručně.
+
+    python3 polish_pages.py && python3 make_halls.py && python3 make_variant_b.py && python3 build_web.py
+
+Kontakt nemá vlastní formulář, všechny odkazy vedou na formulář na hlavní stránce (`index.html#napiste-nam`).

@@ -7,7 +7,7 @@ Co neznáme, je označené „Doplní obec“ (nic si nevymýšlíme).
 import pathlib, re
 
 WEB = pathlib.Path('web')
-src = (WEB / 'index.html').read_text(encoding='utf-8')
+src = pathlib.Path('templates/index-a.html').read_text(encoding='utf-8')
 
 
 def cut(pattern):
@@ -30,10 +30,13 @@ video = cut(r'<div class="inv-video inv-video-people inv-reveal">.*?</div>\n</di
 contact = cut(r'<section class="inv-chapter inv-dark inv-contact" id="napiste-nam">.*?</section>')
 
 # hlavička stránky
-head = re.sub(r'<title>.*?</title>', '<title>YEZEDO Kostice — postavte s obcí zónu u D2 (varianta B)</title>', head)
+head = re.sub(r'<title>.*?</title>', '<title>YEZEDO Kostice — postavte s obcí soběstačnou zónu u D2</title>', head)
+DESC = 'Obec Kostice hledá strategického investora pro soběstačnou a ekologickou zónu u dálnice D2: 6 hal o 10 176 m², hotové sítě a studie, první zájemci o haly.'
+head = re.sub(r'<meta name="description" content="[^"]*">', f'<meta name="description" content="{DESC}">', head)
+head = re.sub(r'<meta property="og:description" content="[^"]*">', f'<meta property="og:description" content="{DESC}">', head)
+head = re.sub(r'<meta property="og:title" content="[^"]*">', '<meta property="og:title" content="YEZEDO Kostice — postavte s obcí soběstačnou zónu u D2">', head)
 head = head.replace('square-night', 'hero').replace('imagesrcset="assets/images/hero-small.webp 800w, assets/images/hero.webp 2000w"',
                                                    'imagesrcset="assets/images/hero-small.webp 800w, assets/images/hero.webp 2000w"')
-head = head.replace('data-page="index.html"', 'data-page="varianta-b.html"')
 head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" class="nav-cta"')
 
 poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
@@ -71,8 +74,6 @@ hodnota = f'''<section class="inv-chapter" id="hodnota">
 </section>'''
 
 main = f'''
-<p class="vb-switch" aria-label="Porovnání variant"><a href="index.html">Varianta A</a><a href="varianta-b.html" aria-current="page">Varianta B</a></p>
-
 <!-- ÚVOD -->
 <section class="inv-hero vb-hero" id="top">
 <div class="inv-hero-media">
@@ -98,7 +99,7 @@ main = f'''
 <nav class="inv-chapters" aria-label="Kapitoly">
 <a href="#dohoda"><b>01</b><span>Nabídka</span></a>
 <a href="#cisla"><b>02</b><span>Investice a čas</span></a>
-<a href="#na-miru"><b>03</b><span>Podoba projektu</span></a>
+<a href="#nabidka"><b>03</b><span>Podoba projektu</span></a>
 <a href="#hodnota"><b>04</b><span>Přidaná hodnota</span></a>
 <a href="#poloha"><b>05</b><span>Poloha</span></a>
 <a href="#jistota"><b>06</b><span>Jistota a postup</span></a>
@@ -133,7 +134,6 @@ main = f'''
 <h3>Haly nebudou stát prázdné.</h3>
 <p>Ještě se nestaví, a obec už má první firmy, které chtějí v halách sídlit. Investor tak od začátku ví, že prostory mají odbyt. Podrobnosti o zájemcích probereme na prvním jednání.</p>
 </div>
-{todo('Kdo bude haly pronajímat a kdo bude provozovat YEZEDO Services.')}
 </div>
 </section>
 
@@ -156,7 +156,7 @@ main = f'''
 </section>
 
 <!-- 03 PODOBA PROJEKTU -->
-<section class="inv-chapter inv-sage" id="na-miru">
+<section class="inv-chapter inv-sage" id="nabidka">
 <div class="container">
 <p class="inv-num"><b>03</b> Podoba projektu</p>
 <h2 class="inv-reveal">ŠEST HAL.<br>JEŠTĚ SE NESTAVÍ.</h2>
@@ -197,11 +197,7 @@ main = f'''
 <a class="inv-sticky" href="#napiste-nam">Máte zájem? Napište nám <span aria-hidden="true">↗</span></a>
 '''
 
-(WEB / 'varianta-b.html').write_text(head + main + foot, encoding='utf-8')
-
-# přepínač variant i na variantě A
-idx = src
-if 'class="vb-switch"' not in idx:
-    idx = idx.replace('<!-- ÚVOD -->', '<p class="vb-switch" aria-label="Porovnání variant"><a href="index.html" aria-current="page">Varianta A</a><a href="varianta-b.html">Varianta B</a></p>\n\n<!-- ÚVOD -->', 1)
-    (WEB / 'index.html').write_text(idx, encoding='utf-8')
-print('ok varianta-b.html')
+(WEB / 'index.html').write_text(head + main + foot, encoding='utf-8')
+# stará adresa varianty B -> hlavní stránka
+(WEB / 'varianta-b.html').write_text('<!doctype html>\n<html lang="cs"><head><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=index.html"><link rel="canonical" href="https://www.yezedokostice.cz/"><title>YEZEDO</title></head><body><p><a href="index.html">Pokračovat na web YEZEDO</a></p></body></html>\n', encoding='utf-8')
+print('ok web/index.html')
