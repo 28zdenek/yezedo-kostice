@@ -40,6 +40,16 @@ head = head.replace('square-night', 'hero').replace('imagesrcset="assets/images/
 head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" class="nav-cta"')
 
 poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
+poloha = poloha.replace('<p class="fine inv-reveal">Dojezdové časy podle mapy Atelieru Dohnalovi.',
+    '<p class="vb-people inv-reveal"><b>≈ 270 000</b><span>obyvatel v okresech Břeclav a Hodonín, kde mohou firmy hledat zaměstnance</span></p>\n'
+    '<p class="fine inv-reveal">Dojezdové časy podle mapy Atelieru Dohnalovi. Počet obyvatel: ČSÚ k 31. 12. 2025 (Břeclav 118 749, Hodonín 151 245).', 1)
+assert 'vb-people' in poloha
+contact = contact.replace('Ozveme se a domluvíme první jednání, případně prohlídku areálu.',
+    'Ozveme se do 2 pracovních dnů a domluvíme první jednání nebo prohlídku areálu na místě.', 1)
+contact = contact.replace('<label><input type="radio" name="zajem" value="Jiné"> Jiné</label>',
+    '<label><input type="radio" name="zajem" value="Prohlídka areálu"> Prohlídka areálu</label>\n<label><input type="radio" name="zajem" value="Jiné"> Jiné</label>', 1)
+assert 'Prohlídka areálu"' in contact and 'do 2 pracovních dnů' in contact
+
 project_video = cut(r'<div class="inv-video inv-reveal">\n<div class="video" data-video="sWQShSMKCxE">.*?</p>\n</div>')
 checklist = cut(r'<ol class="inv-checklist">.*?</ol>')
 _zaj = '<li class="done inv-reveal"><span class="inv-state">Už teď</span><h3>První zájemci o haly</h3><p>Firmy, které chtějí v halách sídlit, se obci ozývají už teď. Investor nezačíná s prázdnými halami.</p>' + todo('Kdy mohou být haly v provozu.') + '</li>'
