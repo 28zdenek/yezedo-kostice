@@ -2860,3 +2860,4 @@ figcaption p {
   .ob a:not(.button){padding:6px 0}
 }
 :where(a,button,input,select,textarea,summary):focus-visible{outline:3px solid var(--sage);outline-offset:3px}
+.inv-contact a[href^="tel:"],.inv-contact a[href^="mailto:"]{display:inline-block;padding:10px 0}
