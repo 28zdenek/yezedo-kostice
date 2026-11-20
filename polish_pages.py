@@ -2,7 +2,7 @@
 
     python3 polish_pages.py     (pak python3 make_halls.py a python3 build_web.py)
 
-- úvod podstránky: velká fotka + nadpis + tlačítka (texty nadpisů a perexů ateliéru zůstávají)
+- úvod podstránky jako u ateliéru (dřívější velkou fotku vrací zpět na původní nadpis)
 - Haly a pronájem: klikací mapa hal nahoře, u každé karty odkaz na stránku haly
 - odkazy nabidka-hal.html#SO0X -> stránky hal hala-so0x.html
 """
@@ -51,25 +51,18 @@ def sub_hero(page, label, img, w, h, second, eyebrow, h1, lead):
 <!--/SUBHERO-->'''
 
 
-for page, (label, img, w, h, second) in PAGES.items():
+for page in PAGES:
     p = WEB / page
     t = p.read_text(encoding='utf-8')
+    # úvod podstránky zůstává jako u ateliéru (od 20. 11. 2026 bez velké fotky)
+    orig = pathlib.Path('atelier', page).read_text(encoding='utf-8').replace('\r\n', '\n')
+    heading = re.search(r'<section class="page-heading[^"]*" id="top">.*?</section>', orig, re.S).group(0)
     if '<!--SUBHERO-->' in t:
-        old = re.search(r'<!--SUBHERO-->.*?<!--/SUBHERO-->', t, re.S).group(0)
-        eyebrow = re.search(r'<p class="inv-kicker"><span>[^<]*</span><span>(.*?)</span></p>', old).group(1)
-        eyebrow = '' if eyebrow == 'Smartzóna YEZEDO Kostice' else eyebrow
-        h1 = re.search(r'<h1>(.*?)</h1>', old, re.S).group(1)
-        lead = re.search(r'<p class="inv-lead">(.*?)</p>', old, re.S).group(1)
-    else:
-        old = re.search(r'<section class="page-heading[^"]*" id="top">.*?</section>', t, re.S).group(0)
-        em = re.search(r'<p class="eyebrow">(.*?)</p>', old)
-        eyebrow = em.group(1) if em else ''
-        h1 = re.search(r'<h1>(.*?)</h1>', old, re.S).group(1)
-        lead = re.search(r'<p class="lead">(.*?)</p>', old, re.S).group(1)
-    t = t.replace(old, sub_hero(page, label, img, w, h, second, eyebrow, h1, lead))
-    # úvodní fotku načíst hned
-    t = re.sub(r'<link rel="preload" as="image"[^>]*>\n?', '', t)
-    t = t.replace('<link rel="stylesheet"', f'<link rel="preload" as="image" href="assets/images/{img}.webp" imagesrcset="assets/images/{img}-small.webp 800w, assets/images/{img}.webp {w}w" imagesizes="100vw">\n<link rel="stylesheet"', 1)
+        t = re.sub(r'<!--SUBHERO-->.*?<!--/SUBHERO-->', lambda m: heading, t, flags=re.S)
+        t = re.sub(r'<link rel="preload" as="image"[^>]*>\n?', '', t)
+        first = re.search(r'<img src="([^"]+)"[^>]*fetchpriority="high"', orig.split(heading, 1)[1][:3000])
+        if first and 'fetchpriority' not in t.split(heading, 1)[1][:3000]:
+            t = t.replace(f'<img src="{first.group(1)}"', f'<img src="{first.group(1)}" fetchpriority="high"', 1)
     t = re.sub(r'href="nabidka-hal\.html#(SO0\d)"', lambda m: f'href="hala-{m.group(1).lower()}.html"', t)
     if page == 'nabidka-hal.html':
         # odkaz na stránku haly v každé kartě
@@ -82,6 +75,6 @@ for page, (label, img, w, h, second) in PAGES.items():
                                  f'<div class="actions">\n<a class="button secondary hall-detail" href="hala-{code.lower()}.html">Detail haly<span aria-hidden="true">↗</span></a>', 1)
         t = re.sub(r'<article class="hall-card" id="(SO0\d)">.*?</article>', add_detail, t, flags=re.S)
         if '<!--HMAP2-->' not in t:
-            t = t.replace('<!--/SUBHERO-->', '<!--/SUBHERO-->\n<!--HMAP2--><!--/HMAP2-->', 1)
+            t = t.replace(heading, heading + '\n<!--HMAP2--><!--/HMAP2-->', 1)
     p.write_text(t, encoding='utf-8')
     print('ok', page)
