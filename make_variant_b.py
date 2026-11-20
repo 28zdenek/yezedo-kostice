@@ -38,6 +38,9 @@ head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" 
 
 poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
 project_video = cut(r'<div class="inv-video inv-reveal">\n<div class="video" data-video="sWQShSMKCxE">.*?</p>\n</div>')
+checklist = cut(r'<ol class="inv-checklist">.*?</ol>')
+_zaj = '<li class="done inv-reveal"><span class="inv-state">Už teď</span><h3>První zájemci o haly</h3><p>Firmy, které chtějí v halách sídlit, se obci ozývají už teď. Investor nezačíná s prázdnými halami.</p>' + todo('Kdy mohou být haly v provozu.') + '</li>'
+checklist = checklist.replace('<li class="next inv-reveal"><span class="inv-state">Konec 2027</span>', _zaj + '\n<li class="next inv-reveal"><span class="inv-state">Konec 2027</span>', 1)
 biq_card = cut(r'<article class="inv-reveal">\n<img src="assets/images/biq-square-small.webp".*?</article>')
 service = cut(r'<div class="inv-service inv-reveal">.*?</div>')
 hodnota = f'''<section class="inv-chapter" id="hodnota">
@@ -140,13 +143,7 @@ main = f'''
 <p class="inv-num"><b>02</b> Investice a čas</p>
 <h2 class="inv-reveal">KOLIK TO STOJÍ<br>A KDY SE STAVÍ.</h2>
 <div class="inv-ready">
-<ol class="inv-checklist">
-<li class="done inv-reveal"><span class="inv-state">Hotovo 2026</span><h3>Sítě a komunikace</h3><p>Komunikace, kanalizace, vodovod, osvětlení a rozvody NN zkolaudovány, s podporou programu MPO Smart Parks for the Future.</p></li>
-<li class="done inv-reveal"><span class="inv-state">Hotovo 07/2026</span><h3>Studie a konstrukce hal</h3><p>Atelier Dohnalovi, konstrukční řešení RIVESTA Consult.</p></li>
-<li class="next inv-reveal"><span class="inv-state">Konec 2027</span><h3>Stavební povolení</h3><p>Předpokládané vydání pro sýpku a prvních šest hal.</p></li>
-<li class="next inv-reveal"><span class="inv-state">2028</span><h3>Zahájení výstavby</h3><p>První etapa: sýpka a haly SO03–SO09.</p></li>
-<li class="done inv-reveal"><span class="inv-state">Už teď</span><h3>První zájemci o haly</h3><p>Firmy, které chtějí v halách sídlit, se obci ozývají už teď. Investor nezačíná s prázdnými halami.</p>{todo('Kdy mohou být haly v provozu.')}</li>
-</ol>
+{checklist}
 <aside class="inv-cost inv-reveal">
 <p class="inv-cost-label">Odhad nákladů šesti hal</p>
 <p class="inv-cost-value">≈ 219<small> mil. Kč</small></p>
