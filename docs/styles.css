@@ -2833,3 +2833,21 @@ figcaption p {
 .vb-demand h3{margin:0 0 8px;font-size:clamp(26px,2.6vw,36px);text-transform:uppercase}
 .vb-demand p:last-child{margin:0;font-size:17px;line-height:1.55;max-width:760px}
 @media(max-width:760px){.vb-demand{grid-template-columns:1fr;padding:20px}.vb-demand-label{grid-row:auto;justify-self:start;margin-bottom:12px}}
+/* Varianta B: soběstačný areál */
+.vb-eco{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;margin:44px 0 0}
+.vb-eco article{border-top:3px solid var(--ink);padding-top:16px}
+.vb-eco .inv-state{display:inline-block;background:var(--sage);color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 8px}
+.vb-eco h3{font-size:22px;margin:12px 0 8px}
+.vb-eco p{margin:0;font-size:15.5px;line-height:1.55}
+.vb-investor-eco{background:var(--ink);color:var(--paper);padding:28px 32px;margin:44px 0}
+.vb-investor-eco h3{font-size:clamp(26px,2.4vw,34px);text-transform:uppercase;color:var(--sage);margin:0 0 14px}
+.vb-investor-eco ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.vb-investor-eco li{font-size:16px;line-height:1.55;border-top:1px solid #f3f1ea33;padding-top:12px}
+.vb-investor-eco b{display:block;font-size:18px;margin-bottom:4px}
+.vb-values{grid-template-columns:1fr!important}
+.vb-values article{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:0 32px;align-items:center}
+.vb-values article img{grid-row:1/3}
+.vb-values article h3{align-self:end;margin-bottom:6px}
+.vb-values article p{align-self:start}
+@media(max-width:980px){.vb-eco{grid-template-columns:1fr 1fr}.vb-investor-eco ul{grid-template-columns:1fr}}
+@media(max-width:760px){.vb-eco{grid-template-columns:1fr}.vb-investor-eco{padding:22px 20px}.vb-values article{grid-template-columns:1fr}.vb-values article img{grid-row:auto}}

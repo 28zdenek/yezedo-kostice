@@ -37,7 +37,39 @@ head = head.replace('data-page="index.html"', 'data-page="varianta-b.html"')
 head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" class="nav-cta"')
 
 poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
-hodnota = cut(r'<section class="inv-chapter" id="hodnota">.*?</section>').replace('<b>06</b> Přidaná hodnota', '<b>04</b> Přidaná hodnota')
+biq_card = cut(r'<article class="inv-reveal">\n<img src="assets/images/biq-square-small.webp".*?</article>')
+service = cut(r'<div class="inv-service inv-reveal">.*?</div>')
+hodnota = f'''<section class="inv-chapter" id="hodnota">
+<div class="container">
+<p class="inv-num"><b>04</b> Přidaná hodnota</p>
+<h2 class="inv-reveal">SOBĚSTAČNÝ AREÁL.<br>NE DALŠÍ HALA NA POLI.</h2>
+<p class="lead inv-narrow inv-reveal">Yezedo je navržené jako areál, který si většinu toho, co potřebuje, zajistí sám: energii z místních zdrojů, vodu z vlastních srážek a materiál z původních staveb. Místo nového záboru pole vrací život bývalému družstvu.</p>
+</div>
+<figure class="inv-wide inv-reveal">
+<img src="assets/images/system.webp" srcset="assets/images/system-small.webp 800w, assets/images/system.webp 2000w" sizes="100vw" alt="Vizualizace vodní plochy s lávkou a zelení v areálu Yezedo" width="2000" height="1132" loading="lazy" decoding="async">
+<figcaption>Voda, zeleň a veřejný prostor jsou součástí infrastruktury areálu. Vizualizace zobrazuje navrhovaný cílový stav.</figcaption>
+</figure>
+<div class="container">
+<div class="vb-eco">
+<article class="inv-reveal"><span class="inv-state">Připravuje se</span><h3>Energie z místních zdrojů</h3><p>Napojení na komunitní energetickou síť KES Kostice. Prověřuje se fotovoltaika, akumulace, kogenerace i využití odpadního tepla.</p></article>
+<article class="inv-reveal"><span class="inv-state">Cíl návrhu</span><h3>Voda zůstává v areálu</h3><p>Veškerá dešťová voda se má využít přímo v areálu, bez odtoku mimo území. Park s vodou a zeleň ochlazují okolí hal.</p></article>
+<article class="inv-reveal"><span class="inv-state">Cíl návrhu</span><h3>Materiály se vracejí do oběhu</h3><p>Cihly, trámy a technické prvky původního JZD se znovu použijí. Areál vzniká na brownfieldu, ne na poli.</p></article>
+<article class="inv-reveal"><span class="inv-state">Cíl návrhu</span><h3>Chytrá správa</h3><p>IoT monitoring má ověřovat úspory v reálném provozu. Digitální velín obce bude v sýpce BIQ.</p></article>
+</div>
+<div class="vb-investor-eco inv-reveal">
+<h3>Co to znamená pro investora</h3>
+<ul>
+<li><b>Stabilnější náklady na energie.</b> Část energie z místních zdrojů místo plné závislosti na cenách z trhu.</li>
+<li><b>Haly, které firmy chtějí.</b> Nájemci stále častěji vyžadují udržitelné budovy a vykazují svou uhlíkovou stopu (ESG).</li>
+<li><b>Projekt s příběhem.</b> Obnova brownfieldu s podporou programu MPO Smart Parks for the Future.</li>
+</ul>
+</div>
+<div class="inv-values vb-values">
+{biq_card}
+</div>
+{service}
+</div>
+</section>'''
 
 main = f'''
 <p class="vb-switch" aria-label="Porovnání variant"><a href="index.html">Varianta A</a><a href="varianta-b.html" aria-current="page">Varianta B</a></p>
@@ -50,7 +82,7 @@ main = f'''
 <div class="inv-hero-inner">
 <p class="inv-kicker"><span>Investiční příležitost · Kostice u D2</span></p>
 <h1>POSTAVTE S OBCÍ<br><em>ZÓNU U D2.</em></h1>
-<p class="inv-lead">Obec Kostice jako developer připravila území, sítě i studii šesti hal. Hledáme strategického investora, se kterým projekt společně doladíme a postavíme.</p>
+<p class="inv-lead">Obec Kostice jako developer připravuje soběstačnou a ekologickou zónu u dálnice D2. Území, sítě i studie šesti hal jsou hotové. Hledáme strategického investora, se kterým projekt společně doladíme a postavíme.</p>
 <div class="inv-hero-actions">
 <a class="button yz-light" href="#dohoda">Co nabízíme<span aria-hidden="true">↓</span></a>
 <a class="button secondary yz-ghost" href="#napiste-nam">Domluvit jednání<span aria-hidden="true">↗</span></a>
