@@ -2750,3 +2750,12 @@ figcaption p {
   .header .site-nav>.nav-cta{transition:opacity .35s ease,visibility .35s,transform .35s ease}
   .header.cta-wait .site-nav>.nav-cta{opacity:0;visibility:hidden;transform:translateY(-6px);pointer-events:none}
 }
+/* Pro občany: malé číslo na řádku s nadpisem */
+.ob-six li{display:grid!important;grid-template-columns:auto 1fr;column-gap:12px;align-items:start}
+.ob-six b{font:700 14px/1 Barlow,Arial,sans-serif!important;-webkit-text-stroke:0;color:var(--paper);background:var(--ink);padding:5px 7px;margin:4px 0 0!important;letter-spacing:.04em}
+.ob-six-cta b{background:var(--ink)}
+.ob-six h3{margin-top:0}
+@media(max-width:760px){
+  .ob-six li{grid-template-columns:auto 1fr;column-gap:12px}
+  .ob-six b{font-size:13px!important;margin-top:3px!important}
+}
