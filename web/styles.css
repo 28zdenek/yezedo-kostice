@@ -2759,3 +2759,18 @@ figcaption p {
   .ob-six li{grid-template-columns:auto 1fr;column-gap:12px}
   .ob-six b{font-size:13px!important;margin-top:3px!important}
 }
+/* úvod hlavní stránky: méně textu, víc fotky */
+.inv-kicker span:only-child{background:var(--sage);color:var(--ink)}
+.inv-hero .inv-kicker{margin-bottom:22px}
+.inv-hero .inv-lead{max-width:560px}
+@media(max-width:760px){
+  .inv-hero-inner{padding-top:28px;padding-bottom:24px}
+  .inv-hero:after{background:linear-gradient(0deg,#111510f7 0%,#111510e6 42%,#11151055 72%,#11151014 100%)}
+  .inv-hero .inv-kicker{font-size:11px;margin-bottom:16px}
+  .inv-hero h1{font-size:clamp(42px,12vw,64px);margin-bottom:16px}
+  .inv-hero .inv-lead{font-size:17px;line-height:1.5;margin-bottom:22px}
+  .inv-hero .inv-hero-actions{flex-wrap:nowrap;gap:10px}
+  .inv-hero{min-height:calc(100svh - var(--header))}
+  .inv-hero .inv-hero-actions .button{width:auto;flex:1 1 0;min-width:0;padding-left:12px;padding-right:12px;font-size:14px;gap:6px;white-space:nowrap}
+  .inv-hero-facts dd{font-size:26px}
+}
