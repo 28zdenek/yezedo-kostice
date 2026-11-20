@@ -2803,3 +2803,26 @@ figcaption p {
 .inv-notes-short li:before{content:'';position:absolute;left:2px;top:19px;width:8px;height:8px;background:var(--sage);border:1px solid var(--ink)}
 .inv-notes-foot{margin-top:18px;font-size:14px;color:var(--muted)}
 @media(max-width:760px){.inv-notes-grid{grid-template-columns:1fr}}
+/* Varianta B: přepínač variant a místa k doplnění */
+.vb-switch{position:fixed;z-index:60;left:16px;bottom:16px;display:flex;margin:0;background:var(--ink);border:1px solid #f3f1ea40;box-shadow:0 6px 20px #0004;font-size:13px;font-weight:700}
+.vb-switch a{color:#f3f1eaa6;padding:8px 12px;text-decoration:none}
+.vb-switch a[aria-current]{background:var(--sage);color:var(--ink)}
+.vb-todo{border:1.5px dashed currentColor;padding:12px 14px;margin:16px 0;font-size:15px;line-height:1.5;opacity:.92}
+.vb-todo span{display:inline-block;background:#e0b45a;color:var(--ink);font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 7px;margin-right:8px}
+.vb-deal{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:40px}
+.vb-deal article{border-top:3px solid var(--ink);padding-top:18px}
+.vb-deal h3{font-size:26px;margin:0 0 14px}
+.vb-deal ul{margin:0;padding:0;list-style:none}
+.vb-deal li{padding:10px 0 10px 22px;border-bottom:1px solid var(--line);position:relative;line-height:1.45}
+.vb-deal li:before{content:'';position:absolute;left:0;top:17px;width:9px;height:9px;background:var(--sage);border:1px solid var(--ink)}
+.vb-gain{background:#e9e7de;padding:18px!important}
+.vb-gain .vb-todo{margin:0}
+.vb-trust{list-style:none;margin:28px 0;padding:0;display:grid;gap:4px}
+.vb-trust h3{font-size:19px;margin:14px 0 0}
+.vb-trust .vb-todo{margin:8px 0 0}
+.vb-hero .inv-hero-media img{object-position:50% 45%}
+.inv-dark .vb-todo span,.inv-cost .vb-todo span{color:var(--ink)}
+@media(max-width:900px){.vb-deal{grid-template-columns:1fr}}
+@media(max-width:760px){.vb-switch{left:auto;right:10px;top:86px;bottom:auto;font-size:12px}.vb-switch a{padding:6px 9px}}
+.vb-switch{left:auto;right:16px;bottom:auto;top:calc(var(--header) + 12px)}
+@media(max-width:760px){.vb-switch{top:calc(var(--header) + 8px);right:10px}}
