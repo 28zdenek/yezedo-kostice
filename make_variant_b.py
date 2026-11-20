@@ -37,6 +37,7 @@ head = head.replace('data-page="index.html"', 'data-page="varianta-b.html"')
 head = head.replace('href="#napiste-nam" class="nav-cta"', 'href="#napiste-nam" class="nav-cta"')
 
 poloha = poloha.replace('<b>02</b> Poloha', '<b>05</b> Poloha')
+project_video = cut(r'<div class="inv-video inv-reveal">\n<div class="video" data-video="sWQShSMKCxE">.*?</p>\n</div>')
 biq_card = cut(r'<article class="inv-reveal">\n<img src="assets/images/biq-square-small.webp".*?</article>')
 service = cut(r'<div class="inv-service inv-reveal">.*?</div>')
 hodnota = f'''<section class="inv-chapter" id="hodnota">
@@ -44,12 +45,7 @@ hodnota = f'''<section class="inv-chapter" id="hodnota">
 <p class="inv-num"><b>04</b> Přidaná hodnota</p>
 <h2 class="inv-reveal">SOBĚSTAČNÝ AREÁL.<br>NE DALŠÍ HALA NA POLI.</h2>
 <p class="lead inv-narrow inv-reveal">Yezedo je navržené jako areál, který si většinu toho, co potřebuje, zajistí sám: energii z místních zdrojů, vodu z vlastních srážek a materiál z původních staveb. Místo nového záboru pole vrací život bývalému družstvu.</p>
-</div>
-<figure class="inv-wide inv-reveal">
-<img src="assets/images/system.webp" srcset="assets/images/system-small.webp 800w, assets/images/system.webp 2000w" sizes="100vw" alt="Vizualizace vodní plochy s lávkou a zelení v areálu Yezedo" width="2000" height="1132" loading="lazy" decoding="async">
-<figcaption>Voda, zeleň a veřejný prostor jsou součástí infrastruktury areálu. Vizualizace zobrazuje navrhovaný cílový stav.</figcaption>
-</figure>
-<div class="container">
+{project_video}
 <div class="vb-eco">
 <article class="inv-reveal"><span class="inv-state">Připravuje se</span><h3>Energie z místních zdrojů</h3><p>Napojení na komunitní energetickou síť KES Kostice. Prověřuje se fotovoltaika, akumulace, kogenerace i využití odpadního tepla.</p></article>
 <article class="inv-reveal"><span class="inv-state">Cíl návrhu</span><h3>Voda zůstává v areálu</h3><p>Veškerá dešťová voda se má využít přímo v areálu, bez odtoku mimo území. Park s vodou a zeleň ochlazují okolí hal.</p></article>
