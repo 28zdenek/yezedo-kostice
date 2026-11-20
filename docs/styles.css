@@ -2826,3 +2826,5 @@ figcaption p {
 @media(max-width:760px){.vb-switch{left:auto;right:10px;top:86px;bottom:auto;font-size:12px}.vb-switch a{padding:6px 9px}}
 .vb-switch{left:auto;right:16px;bottom:auto;top:calc(var(--header) + 12px)}
 @media(max-width:760px){.vb-switch{top:calc(var(--header) + 8px);right:10px}}
+.vb-callout{background:var(--ink);color:var(--paper);padding:20px 24px;margin:24px 0;font-size:18px;line-height:1.55;max-width:860px}
+.vb-callout b{display:block;font:700 26px/1.1 BarlowCondensed,'Arial Narrow',sans-serif;text-transform:uppercase;color:var(--sage);margin-bottom:6px}

@@ -49,7 +49,7 @@ main = f'''
 <div class="inv-hero-inner">
 <p class="inv-kicker"><span>Investiční příležitost · Kostice u D2</span></p>
 <h1>POSTAVTE S OBCÍ<br><em>ZÓNU U D2.</em></h1>
-<p class="inv-lead">Obec Kostice jako developer připravila území, sítě i studii šesti hal. Hledáme strategického investora, se kterým projekt postavíme.</p>
+<p class="inv-lead">Obec Kostice jako developer připravila území, sítě i studii šesti hal. Hledáme strategického investora, se kterým projekt společně doladíme a postavíme.</p>
 <div class="inv-hero-actions">
 <a class="button yz-light" href="#dohoda">Co nabízíme<span aria-hidden="true">↓</span></a>
 <a class="button secondary yz-ghost" href="#napiste-nam">Domluvit jednání<span aria-hidden="true">↗</span></a>
@@ -129,7 +129,7 @@ main = f'''
 <p class="inv-num"><b>03</b> Podoba projektu</p>
 <h2 class="inv-reveal">ŠEST HAL.<br>JEŠTĚ SE NESTAVÍ.</h2>
 <p class="lead inv-narrow inv-reveal">Haly jsou modulární, v měřítku původního družstva. Vnitřní prostor lze dělit na sekce, součástí může být kancelářské patro i showroom. Konstrukční systém i dispozici lze přizpůsobit charakteru provozu.</p>
-{todo('Může investor upravit velikost hal, pořadí etap nebo využití podle svých nájemců? Pokud ano, patří to do úvodu stránky.')}
+<p class="vb-callout inv-reveal"><b>Projekt doladíme společně.</b> Obec má hotovou studii, ale investora bere jako partnera. O konečné podobě projektu, například velikosti hal, etapách nebo využití, se s ním chce domluvit.</p>
 {hmap}
 {halls}
 </div>
